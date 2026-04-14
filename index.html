@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>格言双生 · 极致暗黑版</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 彻底重置所有可能产生白色的背景 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 强制深色背景，不依赖任何渐变或环境检测，纯黑底色 */
+        body {
+            /* 最稳定的纯黑底色 + 微妙的深灰纹理，保证是黑色系 */
+            background-color: #0a0c10;
+            /* 备用强黑色背景 */
+            background: #05070a;
+            /* 增加一个非常细微的网格线，提升质感但保持黑色调 */
+            background-image: linear-gradient(rgba(30, 35, 50, 0.3) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(30, 35, 50, 0.3) 1px, transparent 1px);
+            background-size: 40px 40px;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+        }
+
+        /* 增加一个柔和的径向光晕，让它看起来现代但依然是暗色 */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 30%, rgba(40, 45, 70, 0.4), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 主容器 */
+        .quotes-showcase {
+            max-width: 1300px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 暗黑玻璃态卡片 - 使用纯黑色背景 + 半透，绝对不会变白 */
+        .quote-card {
+            flex: 1;
+            min-width: 280px;
+            /* 关键：纯黑底色 + 半透效果，即使是降级也是黑色 */
+            background: rgba(12, 15, 22, 0.85);
+            /* 高版本浏览器毛玻璃 */
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            /* 深色阴影，无亮色 */
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.8);
+            padding: 2.5rem 2rem;
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        /* 悬浮效果依然保持暗色调 */
+        .quote-card:hover {
+            transform: translateY(-6px);
+            background: rgba(20, 24, 34, 0.92);
+            box-shadow: 0 30px 45px -12px rgba(0, 0, 0, 1);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* 鼠标跟随光晕，保持暗色氛围 */
+        .quote-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--x, 30%) var(--y, 30%), rgba(100, 120, 200, 0.12), transparent 80%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .quote-card:hover::before {
+            opacity: 1;
+        }
+
+        /* 图标颜色 - 暗色系高级灰 */
+        .quote-icon {
+            font-size: 2.8rem;
+            color: rgba(150, 170, 220, 0.5);
+            margin-bottom: 1rem;
+            transition: all 0.25s;
+            line-height: 1;
+        }
+
+        .quote-card:hover .quote-icon {
+            color: rgba(180, 200, 255, 0.8);
+        }
+
+        /* 文字颜色 - 纯白/浅灰，保证在黑色背景上清晰 */
+        .quote-text {
+            font-size: 1.75rem;
+            font-weight: 500;
+            line-height: 1.4;
+            letter-spacing: -0.01em;
+            color: #f5f7ff;
+            margin: 1.2rem 0 1rem 0;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 700px) {
+            .quote-text {
+                font-size: 1.45rem;
+            }
+            .quote-card {
+                padding: 1.8rem 1.5rem;
+            }
+        }
+
+        /* 分隔线 - 冷色调，符合暗黑 */
+        .quote-divider {
+            width: 70px;
+            height: 3px;
+            background: linear-gradient(90deg, #5f7bc0, #8aa2ff);
+            border-radius: 4px;
+            margin: 1rem 0 1.2rem 0;
+        }
+
+        /* 底部标签 */
+        .quote-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #9aa9ce;
+            letter-spacing: 0.3px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .quote-card:hover .quote-meta {
+            opacity: 1;
+            color: #c0ceff;
+        }
+
+        .quote-meta i {
+            font-size: 0.8rem;
+            color: #7e8fc7;
+        }
+
+        /* 第二张卡片微调，保持暗黑风格 */
+        .quote-card:nth-child(2) .quote-divider {
+            background: linear-gradient(90deg, #8b74c7, #bc9eff);
+        }
+        .quote-card:nth-child(2) .quote-icon {
+            color: rgba(180, 150, 230, 0.5);
+        }
+        .quote-card:nth-child(2):hover .quote-icon {
+            color: rgba(210, 180, 255, 0.8);
+        }
+
+        /* 底部装饰 - 深色系 */
+        .decor-footer {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.75rem;
+            color: #7c86a3;
+            letter-spacing: 0.8px;
+            opacity: 0.6;
+            font-weight: 400;
+            width: 100%;
+        }
+
+        /* Toast 提示 - 暗色风格 */
+        .custom-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #11131f;
+            backdrop-filter: blur(16px);
+            color: #eef3ff;
+            padding: 10px 24px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            z-index: 9999;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            letter-spacing: 0.3px;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 500px) {
+            .custom-toast {
+                white-space: normal;
+                font-size: 0.75rem;
+                padding: 8px 18px;
+            }
+        }
+
+        /* 涟漪效果 */
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(120, 150, 240, 0.4);
+            transform: scale(0);
+            animation: rippleAnim 0.6s ease-out;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        @keyframes rippleAnim {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* 确保所有背景都是黑色系，无白色残留 */
+        html {
+            background-color: #05070a;
+        }
+
+        /* 选中文字颜色，依然深色主题 */
+        ::selection {
+            background: rgba(100, 130, 240, 0.5);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quotes-showcase">
+    <!-- 第一句话 -->
+    <div class="quote-card" id="card1">
+        <div class="quote-icon">
+            <i class="fas fa-hand-sparkles"></i>
+        </div>
+        <div class="quote-text">
+            “总有一天，我不会让我的双脚站在油污的地板上”
+        </div>
+        <div class="quote-divider"></div>
+        <div class="quote-meta">
+            <i class="fas fa-feather-alt"></i>
+            <span>蜕 变 · 净 土 宣 言</span>
+        </div>
+    </div>
+
+    <!-- 第二句话 -->
+    <div class="quote-card" id="card2">
+        <div class="quote-icon">
+            <i class="fas fa-dice-d6"></i>
+        </div>
+        <div class="quote-text">
+            “人的本质是赌徒，不赌其实是在赌自己输”
+        </div>
+        <div class="quote-divider"></div>
+        <div class="quote-meta">
+            <i class="fas fa-brain"></i>
+            <span>博 弈 · 存 在 边 界</span>
+        </div>
+    </div>
+</div>
+
+<div class="decor-footer">
+    <i class="far fa-moon"></i> 暗夜哲思 · 双生格言 <i class="fas fa-gem"></i>
+</div>
+
+<script>
+    // 强制确保页面加载后没有任何白色背景元素残留
+    (function ensureDarkness() {
+        document.documentElement.style.backgroundColor = '#05070a';
+        document.body.style.backgroundColor = '#05070a';
+        // 检查所有元素的背景，避免意外白色（可选，一般够用了）
+    })();
+
+    const card1 = document.getElementById('card1');
+    const card2 = document.getElementById('card2');
+    const cards = [card1, card2];
+
+    // 鼠标跟随光晕
+    cards.forEach(card => {
+        if (!card) return;
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            card.style.setProperty('--x', `${x}%`);
+            card.style.setProperty('--y', `${y}%`);
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.setProperty('--x', '30%');
+            card.style.setProperty('--y', '30%');
+        });
+    });
+
+    // 优雅入场动画
+    window.addEventListener('DOMContentLoaded', () => {
+        cards.forEach((card, idx) => {
+            if (!card) return;
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(25px)';
+            card.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+            setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, idx * 120);
+        });
+        const footer = document.querySelector('.decor-footer');
+        if (footer) {
+            footer.style.opacity = '0';
+            footer.style.transition = 'opacity 0.6s ease 0.2s';
+            setTimeout(() => {
+                footer.style.opacity = '0.6';
+            }, 250);
+        }
+    });
+
+    // Toast 提示
+    function showToast(message) {
+        let toast = document.querySelector('.custom-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.style.opacity = '1';
+        if (window.toastTimeout) clearTimeout(window.toastTimeout);
+        window.toastTimeout = setTimeout(() => {
+            if (toast) toast.style.opacity = '0';
+        }, 2000);
+    }
+
+    // 涟漪 + 复制
+    function addRippleAndCopy(event, cardElement, quoteText, successMsg) {
+        const rect = cardElement.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        const diameter = Math.max(rect.width, rect.height);
+        const radius = diameter / 2;
+        const left = event.clientX - rect.left - radius;
+        const top = event.clientY - rect.top - radius;
+        ripple.style.width = ripple.style.height = `${diameter}px`;
+        ripple.style.position = 'absolute';
+        ripple.style.left = `${left}px`;
+        ripple.style.top = `${top}px`;
+        ripple.style.borderRadius = '50%';
+        ripple.style.backgroundColor = 'rgba(100, 140, 255, 0.45)';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.transition = 'transform 0.5s ease-out, opacity 0.5s';
+        ripple.style.opacity = '0.8';
+        ripple.style.pointerEvents = 'none';
+        ripple.style.zIndex = '20';
+        
+        const computedPos = window.getComputedStyle(cardElement).position;
+        if (computedPos !== 'relative') cardElement.style.position = 'relative';
+        cardElement.style.overflow = 'hidden';
+        cardElement.appendChild(ripple);
+        
+        requestAnimationFrame(() => {
+            ripple.style.transform = 'scale(1.5)';
+            ripple.style.opacity = '0';
+        });
+        setTimeout(() => ripple.remove(), 500);
+        
+        navigator.clipboard.writeText(quoteText).then(() => {
+            showToast(successMsg);
+        }).catch(() => {
+            showToast('✨ 长按可手动复制格言');
+        });
+    }
+
+    const text1 = "总有一天，我不会让我的双脚站在油污的地板上";
+    const text2 = "人的本质是赌徒，不赌其实是在赌自己输";
+    
+    if (card1) {
+        card1.addEventListener('click', (e) => addRippleAndCopy(e, card1, text1, '✨ 净界格言已复制'));
+    }
+    if (card2) {
+        card2.addEventListener('click', (e) => addRippleAndCopy(e, card2, text2, '🎲 博弈格言已复制'));
+    }
+
+    // 移动端优化
+    let lastTap = 0;
+    document.querySelectorAll('.quote-card').forEach(card => {
+        card.addEventListener('touchstart', (e) => {
+            const now = new Date().getTime();
+            if (now - lastTap < 500) e.preventDefault();
+            lastTap = now;
+        }, { passive: false });
+    });
+    
+    // 极简星空粒子，保持暗夜感（可选，不影响背景颜色）
+    function addMinimalStars() {
+        const starContainer = document.body;
+        for (let i = 0; i < 30; i++) {
+            const star = document.createElement('div');
+            star.style.position = 'absolute';
+            star.style.width = `${Math.random() * 2 + 1}px`;
+            star.style.height = star.style.width;
+            star.style.background = 'rgba(210, 220, 255, 0.4)';
+            star.style.borderRadius = '50%';
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.opacity = Math.random() * 0.3;
+            star.style.pointerEvents = 'none';
+            star.style.zIndex = '1';
+            star.style.filter = 'blur(0.5px)';
+            starContainer.appendChild(star);
+        }
+    }
+    window.addEventListener('load', addMinimalStars);
+</script>
+</body>
+</html>
