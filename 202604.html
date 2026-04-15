@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>2026年4月 · 月度总结 | 时光叙事</title>
+    <title>2026年4月 · 月度总结</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -36,7 +36,7 @@
         }
 
         .report-container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
@@ -128,6 +128,14 @@
             border-radius: 1.2rem;
             padding: 1.2rem;
             border: 1px solid rgba(255,255,255,0.04);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(45, 55, 85, 0.8);
+            transform: translateY(-3px);
+            border-color: rgba(100, 130, 240, 0.4);
         }
 
         .stat-number {
@@ -239,15 +247,108 @@
             color: #5f6b8a;
         }
 
-        hr {
-            border-color: rgba(255,255,255,0.05);
-            margin: 1rem 0;
+        /* 模态框样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-container {
+            background: #0f1220;
+            border-radius: 1.5rem;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+        }
+
+        .modal-container h3 {
+            color: white;
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 0.8rem;
+        }
+
+        .modal-container h3 i {
+            color: #8aa2ff;
+        }
+
+        .field-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.75rem;
+            color: #b8c4e6;
+        }
+
+        .field-group {
+            background: rgba(25, 30, 48, 0.5);
+            border-radius: 0.8rem;
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .table-name {
+            color: #8aa2ff;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            border-left: 2px solid #6d86e0;
+            padding-left: 0.6rem;
+        }
+
+        .field-item {
+            padding: 0.2rem 0 0.2rem 1.5rem;
+            color: #c0ceff;
+            font-size: 0.7rem;
+            font-family: monospace;
+        }
+
+        .close-modal {
+            background: rgba(100, 130, 240, 0.2);
+            border: 1px solid rgba(100, 130, 240, 0.4);
+            color: #c0ceff;
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 1.2rem;
+            width: fit-content;
+        }
+
+        .close-modal:hover {
+            background: rgba(100, 130, 240, 0.4);
         }
 
         @media (max-width: 700px) {
             body { padding: 1rem; }
             .card { padding: 1.2rem; }
             .page-header h1 { font-size: 1.8rem; }
+            .modal-container { padding: 1.2rem; }
         }
     </style>
 </head>
@@ -259,7 +360,7 @@
 
     <div class="page-header">
         <div class="month-badge">2026年4月 · 月度总结</div>
-        <h1>科研数据检验 · 工作复盘</h1>
+        <h1>四月份总结汇报</h1>
     </div>
 
     <!-- 产出部分 -->
@@ -269,22 +370,22 @@
             <span>产出</span>
         </div>
         <div class="output-grid">
-            <div class="stat-card">
+            <div class="stat-card" id="fieldsCard">
                 <div class="stat-number">145</div>
                 <div class="stat-label">科研数据字段 <span class="badge">全量检验</span></div>
                 <div class="detail-text">检查并进行分析错误</div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" id="problemCard">
                 <div class="stat-number">110</div>
                 <div class="stat-label">问题字段 <span class="badge">存在问题</span></div>
                 <div class="detail-text">证据：IDEA 有相关 SQL 内容</div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" id="sqlCard">
                 <div class="stat-number">281</div>
                 <div class="stat-label">SQL 代码 <span class="badge">行</span></div>
                 <div class="detail-text">数据检验与分析</div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" id="pythonCard">
                 <div class="stat-number">388</div>
                 <div class="stat-label">Python 脚本 <span class="badge">行</span></div>
                 <div class="detail-text">自动化分析处理</div>
@@ -351,5 +452,151 @@
         2026年4月 · 科研数据检验 | 西安理工大学投标 | ETL 任务
     </div>
 </div>
+
+<!-- 模态框 - 用于显示字段列表 -->
+<div id="fieldModal" class="modal-overlay">
+    <div class="modal-container">
+        <h3><i class="fas fa-database"></i> 科研数据字段详情 (145个字段)</h3>
+        <div class="field-list" id="fieldList"></div>
+        <div class="close-modal" onclick="closeModal()">关闭</div>
+    </div>
+</div>
+
+<script>
+    // 字段数据（按表分组，不重复显示表名）
+    const fieldGroups = [
+        {
+            table: "dwd_kxyj_教职工参与科研项目",
+            fields: [
+                "教职工号", "项目名称", "项目类别", "项目类型名称", "项目类型代码",
+                "项目编号", "科技项目类别名称", "科技项目类别代码", "项目级别名称",
+                "项目级别代码", "项目来源单位", "项目来源名称", "项目来源代码",
+                "项目执行状态名称", "项目执行状态代码", "贡献率", "署名顺序",
+                "参与日期", "参与状态", "是否项目负责人", "立项日期", "结项日期", "项目经费总额"
+            ]
+        },
+        {
+            table: "dwd_kxyj_教职工发表论文",
+            fields: [
+                "教职工号", "论文编号", "论文名称", "论文类型名称", "论文类型代码",
+                "收录类别名称", "收录类别代码", "学校署名名称", "学校署名代码",
+                "论文发表类型名称", "论文发表类型代码", "刊物级别名称", "刊物级别代码",
+                "刊物名称", "发表日期", "署名顺序", "贡献率", "是否通讯作者名称",
+                "是否通讯作者代码", "是否第一作者名称", "是否第一作者代码", "SCI", "ESI"
+            ]
+        },
+        {
+            table: "dwd_kxyj_教职工发明专利",
+            fields: [
+                "教职工号", "专利编号", "专利名称", "专利类型名称", "专利类型代码",
+                "专利状态名称", "专利状态代码", "专利授权公告号", "专利授权公告日期",
+                "是否本校专利名称", "是否本校专利代码", "是否PCT专利名称", "是否PCT专利代码",
+                "专利国家名称", "专利国家代码", "贡献率", "发明人排名", "是否本校第一发明人"
+            ]
+        },
+        {
+            table: "dwd_kxyj_教职工出版著作",
+            fields: [
+                "教职工号", "著作编号", "著作名称", "出版社名称", "出版社级别名称",
+                "出版社级别代码", "出版社所在国家地区", "出版日期", "论著类别名称",
+                "论著类别代码", "学校署名名称", "学校署名代码", "署名顺序", "贡献率",
+                "是否第一作者名称", "是否第一作者代码", "是否本校第一作者名称", "是否本校第一作者代码"
+            ]
+        },
+        {
+            table: "dwd_kxyj_教职工发表计算机软件著作权",
+            fields: [
+                "教职工号", "软件著作名称", "证书号", "登记号", "著作权人", "署名顺序",
+                "首次发表日期", "证书取得日期", "证书颁发机构", "权利取得方式名称", "权利取得方式代码"
+            ]
+        },
+        {
+            table: "dwd_kxyj_教职工科研获奖",
+            fields: [
+                "教职工号", "获奖成果类型名称", "获奖成果类型代码", "获奖成果编号", "获奖成果名称",
+                "奖励名称", "获奖类别名称", "获奖类别代码", "获奖级别名称", "获奖级别代码",
+                "获奖等级名称", "获奖等级代码", "获奖日期", "获奖金额", "单位排名", "署名顺序"
+            ]
+        }
+    ];
+
+    // 渲染字段列表到模态框
+    function renderFieldList() {
+        const container = document.getElementById('fieldList');
+        if (!container) return;
+        container.innerHTML = '';
+        fieldGroups.forEach(group => {
+            const groupDiv = document.createElement('div');
+            groupDiv.className = 'field-group';
+            groupDiv.innerHTML = `<div class="table-name">📁 ${group.table}</div>`;
+            group.fields.forEach(field => {
+                const fieldDiv = document.createElement('div');
+                fieldDiv.className = 'field-item';
+                fieldDiv.innerHTML = `<i class="fas fa-caret-right" style="font-size: 0.6rem; margin-right: 0.4rem; color:#8aa2ff;"></i> ${field}`;
+                groupDiv.appendChild(fieldDiv);
+            });
+            container.appendChild(groupDiv);
+        });
+    }
+
+    // 模态框控制
+    const modal = document.getElementById('fieldModal');
+    function openModal() {
+        renderFieldList();
+        modal.classList.add('active');
+    }
+    function closeModal() {
+        modal.classList.remove('active');
+    }
+    window.closeModal = closeModal;
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    // Toast 提示函数
+    function showToast(message, duration = 3000) {
+        let toast = document.querySelector('.custom-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            toast.style.position = 'fixed';
+            toast.style.bottom = '30px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = '#11131fcc';
+            toast.style.backdropFilter = 'blur(12px)';
+            toast.style.color = '#eef3ff';
+            toast.style.padding = '10px 24px';
+            toast.style.borderRadius = '60px';
+            toast.style.fontSize = '0.85rem';
+            toast.style.fontFamily = "'Inter', sans-serif";
+            toast.style.zIndex = '1001';
+            toast.style.border = '1px solid rgba(255,255,255,0.1)';
+            toast.style.pointerEvents = 'none';
+            toast.style.transition = 'opacity 0.2s';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.style.opacity = '1';
+        setTimeout(() => { toast.style.opacity = '0'; }, duration);
+    }
+
+    // 卡片点击事件
+    document.getElementById('fieldsCard').addEventListener('click', () => {
+        openModal();
+    });
+
+    document.getElementById('problemCard').addEventListener('click', () => {
+        window.open('https://alidocs.dingtalk.com/i/nodes/gwva2dxOW4KpQ63lUBG4YRnm8bkz3BRL', '_blank');
+    });
+
+    document.getElementById('sqlCard').addEventListener('click', () => {
+        showToast('请在 IDEA 第317行查看相关内容', 3000);
+    });
+
+    document.getElementById('pythonCard').addEventListener('click', () => {
+        showToast('文件路径存在于：/Users/apple/Desktop/00ceshi/1python/XiAnShiYouZiDuan.py', 4000);
+    });
+</script>
 </body>
 </html>
