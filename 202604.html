@@ -212,6 +212,15 @@
 
         .progress-item {
             margin-bottom: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 1rem;
+            /* transition: all 0.2s ease; */
+        }
+
+        .progress-item:hover {
+            background: rgba(45, 55, 85, 0.4);
+            transform: translateX(4px);
         }
 
         .progress-item:last-child {
@@ -273,7 +282,7 @@
         .modal-container {
             background: #0f1220;
             border-radius: 1.5rem;
-            max-width: 700px;
+            max-width: 750px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
@@ -291,6 +300,10 @@
             gap: 0.6rem;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             padding-bottom: 0.8rem;
+            position: sticky;
+            top: 0;
+            background: #0f1220;
+            z-index: 10;
         }
 
         .modal-container h3 i {
@@ -344,15 +357,15 @@
             background: rgba(100, 130, 240, 0.4);
         }
 
-        /* 居中提示弹窗 */
+        /* 居中提示弹窗 - 通用内容弹窗 */
         .alert-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(12px);
             z-index: 1100;
             display: flex;
             align-items: center;
@@ -370,26 +383,56 @@
         .alert-card {
             background: #0f1220;
             border-radius: 1.5rem;
-            max-width: 400px;
-            width: 85%;
-            padding: 2rem;
-            text-align: center;
+            max-width: 650px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 1.8rem;
             border: 1px solid rgba(100, 130, 240, 0.4);
             box-shadow: 0 20px 35px rgba(0,0,0,0.5);
         }
 
-        .alert-card i {
-            font-size: 3rem;
-            color: #8aa2ff;
+        .alert-card h3 {
+            color: white;
             margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 0.8rem;
+            position: sticky;
+            top: 0;
+            background: #0f1220;
+            z-index: 10;
         }
 
-        .alert-card p {
-            color: #eef3ff;
-            font-size: 1rem;
-            line-height: 1.5;
+        .alert-card h3 i {
+            color: #8aa2ff;
+        }
+
+        .alert-content {
+            color: #c0ceff;
+            font-size: 0.85rem;
+            line-height: 1.6;
             margin: 1rem 0;
-            word-break: break-word;
+        }
+
+        .alert-content ul, .alert-content ol {
+            padding-left: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .alert-content li {
+            margin: 0.3rem 0;
+        }
+
+        .alert-content p {
+            margin: 0.5rem 0;
+        }
+
+        .alert-content h4 {
+            color: #8aa2ff;
+            margin: 0.8rem 0 0.3rem 0;
         }
 
         .alert-card button {
@@ -414,8 +457,8 @@
             .card { padding: 1.2rem; }
             .page-header h1 { font-size: 1.8rem; }
             .modal-container { padding: 1.2rem; }
-            .alert-card { padding: 1.5rem; }
-            .alert-card p { font-size: 0.9rem; }
+            .alert-card { padding: 1.2rem; }
+            .alert-content { font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -439,12 +482,12 @@
         <div class="output-grid">
             <div class="stat-card" id="fieldsCard">
                 <div class="stat-number">145</div>
-                <div class="stat-label">科研数据字段 <span class="badge">个</span></div>
+                <div class="stat-label">科研数据字段 <span class="badge">全量检验</span></div>
                 <div class="detail-text">检查并进行分析错误</div>
             </div>
             <div class="stat-card" id="problemCard">
                 <div class="stat-number">110</div>
-                <div class="stat-label">问题字段 <span class="badge">个</span></div>
+                <div class="stat-label">问题字段 <span class="badge">存在问题</span></div>
                 <div class="detail-text">证据：IDEA 有相关 SQL 内容</div>
             </div>
             <div class="stat-card" id="sqlCard">
@@ -456,11 +499,6 @@
                 <div class="stat-number">388</div>
                 <div class="stat-label">Python 脚本 <span class="badge">行</span></div>
                 <div class="detail-text">自动化分析处理</div>
-            </div>
-            <div class="stat-card" id="etlCard">
-                <div class="stat-number">2</div>
-                <div class="stat-label">ETL任务 <span class="badge">个</span></div>
-                <div class="detail-text">往人事系统推数据</div>
             </div>
         </div>
     </div>
@@ -479,6 +517,13 @@
                     <div class="list-desc">参与投标相关工作</div>
                 </div>
             </div>
+            <div class="list-item">
+                <div class="list-icon"><i class="fas fa-exchange-alt"></i></div>
+                <div class="list-content">
+                    <div class="list-title">ETL 任务</div>
+                    <div class="list-desc">完成 2 个 ETL 任务</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -488,14 +533,14 @@
             <i class="fas fa-graduation-cap"></i>
             <span>学习进度</span>
         </div>
-        <div class="progress-item">
+        <div class="progress-item" id="platformProgress">
             <div class="progress-label">
                 <span>平台熟悉程度 (以 e1, e2 级别为标准)</span>
                 <span>90%</span>
             </div>
             <div class="progress-bar-bg"><div class="progress-fill" style="width: 90%;"></div></div>
         </div>
-        <div class="progress-item">
+        <div class="progress-item" id="generalSkill">
             <div class="progress-label">
                 <span>通识类技能</span>
                 <span>80%</span>
@@ -527,12 +572,12 @@
     </div>
 </div>
 
-<!-- 居中提示弹窗 -->
-<div id="alertModal" class="alert-modal">
+<!-- 内容弹窗 - 用于显示详细技能/知识内容 -->
+<div id="contentModal" class="alert-modal">
     <div class="alert-card">
-        <i class="fas fa-info-circle"></i>
-        <p id="alertMessage">提示信息</p>
-        <button onclick="closeAlertModal()">知道了</button>
+        <h3 id="contentModalTitle"><i class="fas fa-code"></i> 详细信息</h3>
+        <div id="contentModalBody" class="alert-content"></div>
+        <button onclick="closeContentModal()">关闭</button>
     </div>
 </div>
 
@@ -627,22 +672,91 @@
         if (e.target === fieldModal) closeModal();
     });
 
-    // 居中提示弹窗
-    const alertModal = document.getElementById('alertModal');
-    const alertMessage = document.getElementById('alertMessage');
+    // 内容弹窗
+    const contentModal = document.getElementById('contentModal');
+    const contentModalTitle = document.getElementById('contentModalTitle');
+    const contentModalBody = document.getElementById('contentModalBody');
     
-    function showAlertModal(message) {
-        alertMessage.textContent = message;
-        alertModal.classList.add('active');
+    function openContentModal(title, htmlContent) {
+        contentModalTitle.innerHTML = title;
+        contentModalBody.innerHTML = htmlContent;
+        contentModal.classList.add('active');
     }
     
-    function closeAlertModal() {
-        alertModal.classList.remove('active');
+    function closeContentModal() {
+        contentModal.classList.remove('active');
     }
-    window.closeAlertModal = closeAlertModal;
-    alertModal.addEventListener('click', (e) => {
-        if (e.target === alertModal) closeAlertModal();
+    window.closeContentModal = closeContentModal;
+    contentModal.addEventListener('click', (e) => {
+        if (e.target === contentModal) closeContentModal();
     });
+
+    // 平台熟悉程度详细内容
+    const platformContent = `
+        <h4>📝 一、笔试部分</h4>
+        <ul>
+            <li>掌握关系型数据库的概念、原理</li>
+            <li>掌握关系型数据库和非关系型数据库的区别</li>
+            <li>了解数据基座产品解决方案</li>
+            <li>掌握数据仓库业务概念、元数据业务概念、数据标准业务概念、数据资源目录业务概念</li>
+        </ul>
+        <h4>🔧 二、实操部分</h4>
+        <ul>
+            <li>掌握Oracle、MySQL、SqlServer、PG、greenplum等数据库配置连接操作</li>
+            <li>掌握数据基座初始化配置操作（包含组织机构同步人员、用户同步、权限配置、认证集成、LOGO配置、系统安全、CASP集成、消息配置等内容）</li>
+            <li>掌握数据源配置（包含应用管理与数据源配置）</li>
+            <li>掌握数据定时入湖配置（包含普通数据、时序数据、行业集成库使用、表结构更新、采集任务监控、配置管理等）</li>
+            <li>掌握greenplum数据库的调优、日志定位、备份恢复等</li>
+            <li>掌握元数据配置（包含数据仓库、来源库、任务、仪表板的元数据）</li>
+            <li>掌握补采工具使用</li>
+            <li>掌握标准层实施（包含云端标准模型初始化<模型下载、自定义模型>、任务配置、计算字段、子转换、代码映射<贴源表>、脏数据过滤<贴源表>、清洗转换任务）</li>
+            <li>掌握共享交换中的业务数据实施（包含视图创建、新增表、参照现有表新增）</li>
+            <li>掌握数据共享交换实施（包含任务配置、计算字段、子转换 、sql编辑器、调度计划）</li>
+            <li>掌握数据标准实施（包含代码标准、数据元素标准，编码规范，标准发布、配置管理<标准发布部门名称、标准发布学校代号>、数据门户的标准与规范）</li>
+            <li>掌握数据资源编目实施方法（包含数据资源目录、api调用域名地址）</li>
+            <li>掌握数据资源共享实施方法（包含数据资源共享与数据门户实施）</li>
+            <li>掌握老数据平台迁移能力（包含希嘉API迁移、数据V5平台迁移与ODI-ETL迁移）</li>
+            <li>具备可视化大屏主题分析实施能力（包含调研）</li>
+            <li>掌握高职上报工具实施能力</li>
+            <li>能基于odi的etl接口进行接口迁移的工作</li>
+        </ul>
+    `;
+
+    // 通识类技能详细内容
+    const generalSkillContent = `
+        <ul>
+            <li>具备linux操作系统基础理论与实操能力</li>
+            <li>具备oracle、SQL语句基础理论与实操能力</li>
+            <li>具备docker、tomcat、weblogic基础理论与实操能力</li>
+        </ul>
+        <h4>🛠️ 工具使用</h4>
+        <ul>
+            <li>xshell等服务器远程连接工具使用</li>
+            <li>PLSQL等数据库远程连接工具使用</li>
+        </ul>
+        <h4>💻 LINUX基础命令</h4>
+        <ul>
+            <li>会使用命令创建文件夹/文件</li>
+            <li>会使用vim对文件操作</li>
+            <li>会使用查找命令</li>
+            <li>会使用拷贝和移动命令</li>
+            <li>会使用常用的网络排查命令，如telnet、netstat、ping等</li>
+            <li>会使用压缩解压缩命令对程序进行备份</li>
+            <li>会使用远程复制命令scp</li>
+            <li>会使用命令查询服务器的基本信息，如top、free、ps等</li>
+            <li>会使用命令对文件的权限进行修改</li>
+        </ul>
+        <h4>🐳 容器与中间件</h4>
+        <ul>
+            <li>会实操docker、tomcat、weblogic（包含安装、启停等）</li>
+        </ul>
+        <h4>🔐 安全与日志</h4>
+        <ul>
+            <li>熟悉堡垒机的使用方法</li>
+            <li>能够在oracle数据库中通过SQL语句进行增删改查等操作</li>
+            <li>能够分析查看操作系统与业务系统各项日志文件</li>
+        </ul>
+    `;
 
     // 卡片点击事件
     document.getElementById('fieldsCard').addEventListener('click', () => {
@@ -654,11 +768,45 @@
     });
 
     document.getElementById('sqlCard').addEventListener('click', () => {
-        showAlertModal('请在 IDEA 第317行查看相关内容');
+        const alertModal = document.createElement('div');
+        alertModal.className = 'alert-modal';
+        alertModal.innerHTML = `
+            <div class="alert-card" style="max-width: 400px;">
+                <i class="fas fa-info-circle" style="font-size: 2rem; color: #8aa2ff; display: block; text-align: center; margin-bottom: 1rem;"></i>
+                <p style="color: #eef3ff; text-align: center; font-size: 1rem;">请在 IDEA 第317行查看相关内容</p>
+                <button onclick="this.closest('.alert-modal').remove()" style="display: block; margin: 1rem auto 0;">知道了</button>
+            </div>
+        `;
+        document.body.appendChild(alertModal);
+        setTimeout(() => alertModal.classList.add('active'), 10);
+        alertModal.addEventListener('click', (e) => {
+            if (e.target === alertModal) alertModal.remove();
+        });
     });
 
     document.getElementById('pythonCard').addEventListener('click', () => {
-        showAlertModal('文件路径存在于：/Users/apple/Desktop/00ceshi/1python/XiAnShiYouZiDuan.py');
+        const alertModal = document.createElement('div');
+        alertModal.className = 'alert-modal';
+        alertModal.innerHTML = `
+            <div class="alert-card" style="max-width: 500px;">
+                <i class="fas fa-file-code" style="font-size: 2rem; color: #8aa2ff; display: block; text-align: center; margin-bottom: 1rem;"></i>
+                <p style="color: #eef3ff; text-align: center; font-size: 0.9rem; word-break: break-all;">文件路径存在于：<br>/Users/apple/Desktop/00ceshi/1python/XiAnShiYouZiDuan.py</p>
+                <button onclick="this.closest('.alert-modal').remove()" style="display: block; margin: 1rem auto 0;">知道了</button>
+            </div>
+        `;
+        document.body.appendChild(alertModal);
+        setTimeout(() => alertModal.classList.add('active'), 10);
+        alertModal.addEventListener('click', (e) => {
+            if (e.target === alertModal) alertModal.remove();
+        });
+    });
+
+    document.getElementById('platformProgress').addEventListener('click', () => {
+        openContentModal('<i class="fas fa-cloud-upload-alt"></i> 平台熟悉程度 (e1/e2级别标准)', platformContent);
+    });
+
+    document.getElementById('generalSkill').addEventListener('click', () => {
+        openContentModal('<i class="fas fa-brain"></i> 通识类技能详情', generalSkillContent);
     });
 </script>
 </body>
