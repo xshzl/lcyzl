@@ -23,7 +23,6 @@
             background-size: 32px 32px;
         }
 
-        /* 动态光晕背景 */
         body::before {
             content: "";
             position: fixed;
@@ -36,15 +35,13 @@
             z-index: 0;
         }
 
-        /* 主容器 */
         .report-container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
         }
 
-        /* 返回主页按钮 */
         .back-home {
             display: inline-flex;
             align-items: center;
@@ -69,11 +66,11 @@
             color: white;
         }
 
-        /* 页眉 */
         .page-header {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
         }
+
         .month-badge {
             display: inline-block;
             background: linear-gradient(135deg, #3a4c8c, #5f7bc0);
@@ -84,24 +81,17 @@
             color: white;
             letter-spacing: 1px;
             margin-bottom: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
+
         .page-header h1 {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: 700;
             background: linear-gradient(135deg, #eef3ff, #8aa2ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.5px;
-        }
-        .page-header .sub {
-            color: #7e8fbb;
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
         }
 
-        /* 卡片通用样式 */
         .card {
             background: rgba(12, 15, 22, 0.7);
             backdrop-filter: blur(12px);
@@ -109,47 +99,40 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
             padding: 1.8rem 2rem;
             margin-bottom: 1.8rem;
-            transition: all 0.25s ease;
         }
-        .card:hover {
-            background: rgba(18, 22, 32, 0.85);
-            border-color: rgba(100, 130, 240, 0.25);
-        }
+
         .card-title {
             display: flex;
             align-items: center;
             gap: 0.8rem;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: #eef3ff;
             margin-bottom: 1.5rem;
             border-left: 4px solid #6d86e0;
             padding-left: 1rem;
         }
+
         .card-title i {
             color: #8aa2ff;
-            font-size: 1.4rem;
         }
 
-        /* 产出网格 (2列) */
+        /* 产出网格 */
         .output-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.2rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
         }
+
         .stat-card {
             background: rgba(25, 30, 48, 0.6);
             border-radius: 1.2rem;
             padding: 1.2rem;
             border: 1px solid rgba(255,255,255,0.04);
-            transition: 0.2s;
         }
-        .stat-card:hover {
-            background: rgba(35, 42, 65, 0.7);
-            transform: translateY(-2px);
-        }
+
         .stat-number {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 800;
             background: linear-gradient(135deg, #c0ceff, #a0b4f0);
             -webkit-background-clip: text;
@@ -157,6 +140,7 @@
             color: transparent;
             line-height: 1;
         }
+
         .stat-label {
             color: #9aa9ce;
             font-size: 0.85rem;
@@ -166,47 +150,38 @@
             gap: 0.5rem;
             flex-wrap: wrap;
         }
-        .badge-problem {
-            background: rgba(220, 100, 80, 0.2);
-            color: #ffaa99;
+
+        .badge {
+            background: rgba(100, 130, 240, 0.2);
             padding: 0.2rem 0.6rem;
             border-radius: 20px;
             font-size: 0.7rem;
+            color: #b8cbff;
         }
-        .badge-sql {
-            background: rgba(80, 160, 200, 0.2);
-            color: #8ad8ff;
-        }
-        .badge-python {
-            background: rgba(100, 180, 120, 0.2);
-            color: #a0f0b0;
-        }
+
         .detail-text {
             color: #b8c4e6;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             margin-top: 0.5rem;
-            border-top: 1px dashed rgba(255,255,255,0.1);
+            border-top: 1px dashed rgba(255,255,255,0.08);
             padding-top: 0.5rem;
         }
 
-        /* 条目列表 */
         .item-list {
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
+
         .list-item {
             display: flex;
             align-items: center;
             gap: 1rem;
             background: rgba(20, 24, 38, 0.5);
-            padding: 0.9rem 1.2rem;
+            padding: 0.8rem 1.2rem;
             border-radius: 1rem;
-            transition: 0.2s;
         }
-        .list-item:hover {
-            background: rgba(40, 48, 70, 0.6);
-        }
+
         .list-icon {
             width: 36px;
             height: 36px;
@@ -217,25 +192,21 @@
             justify-content: center;
             color: #8aa2ff;
         }
-        .list-content {
-            flex: 1;
-        }
+
         .list-title {
             font-weight: 600;
             color: #eef3ff;
         }
+
         .list-desc {
             font-size: 0.8rem;
             color: #9aa9ce;
         }
 
-        /* 进度条 */
-        .progress-section {
-            margin-top: 0.5rem;
-        }
         .progress-item {
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
         }
+
         .progress-label {
             display: flex;
             justify-content: space-between;
@@ -243,28 +214,26 @@
             font-size: 0.85rem;
             margin-bottom: 0.4rem;
         }
+
         .progress-bar-bg {
             height: 8px;
             background: rgba(30, 35, 55, 0.8);
             border-radius: 10px;
             overflow: hidden;
         }
+
         .progress-fill {
             height: 100%;
             border-radius: 10px;
             background: linear-gradient(90deg, #5f7bc0, #8aa2ff);
             width: 0%;
-            box-shadow: 0 0 6px rgba(100,130,240,0.5);
         }
-        .chip {
-            display: inline-block;
-            background: rgba(100, 130, 240, 0.15);
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: #b8cbff;
-            margin-right: 0.5rem;
-            margin-top: 0.3rem;
+
+        .footer-note {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            color: #5f6b8a;
         }
 
         hr {
@@ -275,159 +244,101 @@
         @media (max-width: 700px) {
             body { padding: 1rem; }
             .card { padding: 1.2rem; }
-            .page-header h1 { font-size: 2rem; }
-            .stat-number { font-size: 1.6rem; }
-        }
-
-        /* 页脚 */
-        .footer-note {
-            text-align: center;
-            margin-top: 2rem;
-            font-size: 0.7rem;
-            color: #5f6b8a;
+            .page-header h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 <div class="report-container">
-    <!-- 返回主页的链接（与时光叙事主页保持一致） -->
     <a href="https://xshzl.github.io/lcyzl/" class="back-home">
         <i class="fas fa-arrow-left"></i> 返回主页
     </a>
 
     <div class="page-header">
-        <div class="month-badge">📅 2026年4月 · 月度总结</div>
-        <h1>科研数据检验 · 技术复盘</h1>
-        <div class="sub">数据治理 | ETL任务 | 投标参与 | 平台进阶</div>
+        <div class="month-badge">2026年4月 · 月度总结</div>
+        <h1>科研数据检验 · 工作复盘</h1>
     </div>
 
-    <!-- 产出部分：核心数据 -->
+    <!-- 产出部分 -->
     <div class="card">
         <div class="card-title">
             <i class="fas fa-chart-line"></i>
-            <span>📊 核心产出</span>
+            <span>产出</span>
         </div>
         <div class="output-grid">
             <div class="stat-card">
                 <div class="stat-number">145</div>
-                <div class="stat-label"><i class="fas fa-database"></i> 科研数据字段</div>
-                <div class="detail-text">全量检验 · 覆盖业务核心表</div>
+                <div class="stat-label">科研数据字段 <span class="badge">全量检验</span></div>
+                <div class="detail-text">检查并进行分析错误</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">110</div>
-                <div class="stat-label">
-                    <i class="fas fa-exclamation-triangle"></i> 问题字段
-                    <span class="badge-problem">检出率 75.9%</span>
-                </div>
-                <div class="detail-text"><i class="fas fa-check-circle"></i> 依据：IDEA 平台 SQL 脚本验证</div>
+                <div class="stat-label">问题字段 <span class="badge">存在问题</span></div>
+                <div class="detail-text">证据：IDEA 有相关 SQL 内容</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">281</div>
-                <div class="stat-label"><i class="fas fa-code"></i> SQL 代码行 <span class="badge-sql">数据清洗/校验</span></div>
-                <div class="detail-text">涵盖异常检测、空值统计、逻辑约束</div>
+                <div class="stat-label">SQL 代码 <span class="badge">行</span></div>
+                <div class="detail-text">数据检验与分析</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">388</div>
-                <div class="stat-label"><i class="fab fa-python"></i> Python 脚本 <span class="badge-python">自动化分析</span></div>
-                <div class="detail-text">字段血缘解析 + 问题分类聚合 + 报告生成</div>
+                <div class="stat-label">Python 脚本 <span class="badge">行</span></div>
+                <div class="detail-text">自动化分析处理</div>
             </div>
-        </div>
-        <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: flex-start;">
-            <span class="chip"><i class="fas-regular fa-flask"></i> IDEA 证据链闭环</span>
-            <span class="chip"><i class="fas fa-chart-simple"></i> 异常模式聚类</span>
-            <span class="chip"><i class="fas fa-file-alt"></i> 质量评估报告</span>
         </div>
     </div>
 
-    <!-- 其它项目贡献 -->
+    <!-- 项目及任务 -->
     <div class="card">
         <div class="card-title">
             <i class="fas fa-briefcase"></i>
-            <span>🚀 项目及任务</span>
+            <span>项目及任务</span>
         </div>
         <div class="item-list">
             <div class="list-item">
                 <div class="list-icon"><i class="fas fa-gavel"></i></div>
                 <div class="list-content">
                     <div class="list-title">西安理工大学 · 投标事宜</div>
-                    <div class="list-desc">全程参与标书技术部分撰写、方案架构梳理、投标材料整合，支撑项目落地推进。</div>
+                    <div class="list-desc">参与投标相关工作</div>
                 </div>
             </div>
             <div class="list-item">
                 <div class="list-icon"><i class="fas fa-exchange-alt"></i></div>
                 <div class="list-content">
-                    <div class="list-title">ETL 任务交付 (2个)</div>
-                    <div class="list-desc">完成两个核心数据管道调度任务，保障数据从业务库到数仓的稳定同步与清洗。</div>
-                </div>
-            </div>
-            <div class="list-item">
-                <div class="list-icon"><i class="fas fa-microscope"></i></div>
-                <div class="list-content">
-                    <div class="list-title">字段级数据质量校验体系</div>
-                    <div class="list-desc">基于 SQL + Python 搭建可复用的字段规则库，为后续质量巡检提供基础。</div>
+                    <div class="list-title">ETL 任务</div>
+                    <div class="list-desc">完成 2 个 ETL 任务</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 学习进度板块 -->
+    <!-- 学习进度 -->
     <div class="card">
         <div class="card-title">
             <i class="fas fa-graduation-cap"></i>
-            <span>📚 学习成长 · 能力进阶</span>
+            <span>学习进度</span>
         </div>
-        <div class="progress-section">
-            <div class="progress-item">
-                <div class="progress-label">
-                    <span><i class="fas fa-cloud-upload-alt"></i> 数据平台熟悉程度 (对标 e1/e2 级别)</span>
-                    <span>90%</span>
-                </div>
-                <div class="progress-bar-bg"><div class="progress-fill" style="width: 90%;"></div></div>
-                <div class="detail-text" style="margin-top: 8px;">熟练使用平台元数据管理、数据质量模块及任务调度；可独立完成复杂问题排查。</div>
+        <div class="progress-item">
+            <div class="progress-label">
+                <span>平台熟悉程度 (以 e1, e2 级别为标准)</span>
+                <span>90%</span>
             </div>
+            <div class="progress-bar-bg"><div class="progress-fill" style="width: 90%;"></div></div>
         </div>
-        <hr>
-        <div class="item-list">
+        <div class="item-list" style="margin-top: 1rem;">
             <div class="list-item">
                 <div class="list-icon"><i class="fas fa-file-signature"></i></div>
                 <div class="list-content">
-                    <div class="list-title">公司投标全流程熟悉</div>
-                    <div class="list-desc">从招标文件解读 → 技术方案编写 → 报价策略 → 标书封装及投标后跟踪，已形成完整认知。</div>
+                    <div class="list-title">公司投标全流程</div>
+                    <div class="list-desc">已了解公司投标全流程</div>
                 </div>
             </div>
-            <div class="list-item">
-                <div class="list-icon"><i class="fas fa-chart-network"></i></div>
-                <div class="list-content">
-                    <div class="list-title">数据治理最佳实践</div>
-                    <div class="list-desc">基于本次145个字段的检验，沉淀出字段级质量评估模板与异常分类方法论。</div>
-                </div>
-            </div>
-        </div>
-        <div style="margin-top: 1rem;">
-            <span class="chip"><i class="fas-regular fa-star"></i> e1能力达标</span>
-            <span class="chip"><i class="fas-regular fa-star"></i> e2能力覆盖85%</span>
-            <span class="chip"><i class="fas fa-tasks"></i> 投标流程SOP梳理中</span>
-        </div>
-    </div>
-
-    <!-- 下月展望 / 备注 -->
-    <div class="card" style="background: rgba(25, 35, 55, 0.5);">
-        <div class="card-title" style="border-left-color: #c0a0ff;">
-            <i class="fas fa-calendar-plus"></i>
-            <span>🔭 五月规划</span>
-        </div>
-        <div class="list-desc" style="color:#b8c4e6;">
-            • 完成剩余问题字段治理方案并推动整改 <br>
-            • 沉淀数据质量检验自动化工具，提升巡检效率 <br>
-            • 深入 ETL 性能调优，继续对标 e2 全栈能力
-        </div>
-        <div class="footer-note" style="margin-top: 1rem; text-align: left; opacity:0.6;">
-            <i class="fas fa-database"></i> 数据驱动 · 月更复盘
         </div>
     </div>
 
     <div class="footer-note">
-        <i class="far fa-clock"></i> 2026年4月  |  科研数据检验专项 · 西安理工大学投标支撑  |  记录成长刻度
+        2026年4月 · 科研数据检验 | 西安理工大学投标 | ETL 任务
     </div>
 </div>
 </body>
