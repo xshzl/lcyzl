@@ -247,7 +247,7 @@
             color: #5f6b8a;
         }
 
-        /* 模态框样式 */
+        /* 模态框样式 - 字段列表 */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -344,11 +344,78 @@
             background: rgba(100, 130, 240, 0.4);
         }
 
+        /* 居中提示弹窗 */
+        .alert-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+
+        .alert-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .alert-card {
+            background: #0f1220;
+            border-radius: 1.5rem;
+            max-width: 400px;
+            width: 85%;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(100, 130, 240, 0.4);
+            box-shadow: 0 20px 35px rgba(0,0,0,0.5);
+        }
+
+        .alert-card i {
+            font-size: 3rem;
+            color: #8aa2ff;
+            margin-bottom: 1rem;
+        }
+
+        .alert-card p {
+            color: #eef3ff;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin: 1rem 0;
+            word-break: break-word;
+        }
+
+        .alert-card button {
+            background: linear-gradient(135deg, #3a4c8c, #5f7bc0);
+            border: none;
+            padding: 0.6rem 1.8rem;
+            border-radius: 40px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .alert-card button:hover {
+            transform: scale(1.02);
+            opacity: 0.9;
+        }
+
         @media (max-width: 700px) {
             body { padding: 1rem; }
             .card { padding: 1.2rem; }
             .page-header h1 { font-size: 1.8rem; }
             .modal-container { padding: 1.2rem; }
+            .alert-card { padding: 1.5rem; }
+            .alert-card p { font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -462,6 +529,15 @@
     </div>
 </div>
 
+<!-- 居中提示弹窗 -->
+<div id="alertModal" class="alert-modal">
+    <div class="alert-card">
+        <i class="fas fa-info-circle"></i>
+        <p id="alertMessage">提示信息</p>
+        <button onclick="closeAlertModal()">知道了</button>
+    </div>
+</div>
+
 <script>
     // 字段数据（按表分组，不重复显示表名）
     const fieldGroups = [
@@ -539,47 +615,36 @@
         });
     }
 
-    // 模态框控制
-    const modal = document.getElementById('fieldModal');
+    // 字段列表模态框
+    const fieldModal = document.getElementById('fieldModal');
     function openModal() {
         renderFieldList();
-        modal.classList.add('active');
+        fieldModal.classList.add('active');
     }
     function closeModal() {
-        modal.classList.remove('active');
+        fieldModal.classList.remove('active');
     }
     window.closeModal = closeModal;
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
+    fieldModal.addEventListener('click', (e) => {
+        if (e.target === fieldModal) closeModal();
     });
 
-    // Toast 提示函数
-    function showToast(message, duration = 3000) {
-        let toast = document.querySelector('.custom-toast');
-        if (!toast) {
-            toast = document.createElement('div');
-            toast.className = 'custom-toast';
-            toast.style.position = 'fixed';
-            toast.style.bottom = '30px';
-            toast.style.left = '50%';
-            toast.style.transform = 'translateX(-50%)';
-            toast.style.backgroundColor = '#11131fcc';
-            toast.style.backdropFilter = 'blur(12px)';
-            toast.style.color = '#eef3ff';
-            toast.style.padding = '10px 24px';
-            toast.style.borderRadius = '60px';
-            toast.style.fontSize = '0.85rem';
-            toast.style.fontFamily = "'Inter', sans-serif";
-            toast.style.zIndex = '1001';
-            toast.style.border = '1px solid rgba(255,255,255,0.1)';
-            toast.style.pointerEvents = 'none';
-            toast.style.transition = 'opacity 0.2s';
-            document.body.appendChild(toast);
-        }
-        toast.textContent = message;
-        toast.style.opacity = '1';
-        setTimeout(() => { toast.style.opacity = '0'; }, duration);
+    // 居中提示弹窗
+    const alertModal = document.getElementById('alertModal');
+    const alertMessage = document.getElementById('alertMessage');
+    
+    function showAlertModal(message) {
+        alertMessage.textContent = message;
+        alertModal.classList.add('active');
     }
+    
+    function closeAlertModal() {
+        alertModal.classList.remove('active');
+    }
+    window.closeAlertModal = closeAlertModal;
+    alertModal.addEventListener('click', (e) => {
+        if (e.target === alertModal) closeAlertModal();
+    });
 
     // 卡片点击事件
     document.getElementById('fieldsCard').addEventListener('click', () => {
@@ -591,11 +656,11 @@
     });
 
     document.getElementById('sqlCard').addEventListener('click', () => {
-        showToast('请在 IDEA 第317行查看相关内容', 3000);
+        showAlertModal('请在 IDEA 第317行查看相关内容');
     });
 
     document.getElementById('pythonCard').addEventListener('click', () => {
-        showToast('文件路径存在于：/Users/apple/Desktop/00ceshi/1python/XiAnShiYouZiDuan.py', 4000);
+        showAlertModal('文件路径存在于：/Users/apple/Desktop/00ceshi/1python/XiAnShiYouZiDuan.py');
     });
 </script>
 </body>
