@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>换行转分号 - 极简转换器</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0f2f5;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 28px;
+        }
+
+        h2 {
+            margin: 0 0 8px 0;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #1a2c3e;
+        }
+
+        .sub {
+            color: #5b6e8c;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+            border-left: 3px solid #3a7ca5;
+            padding-left: 12px;
+        }
+
+        textarea {
+            width: 100%;
+            border: 2px solid #d0d8e5;
+            border-radius: 16px;
+            padding: 14px 16px;
+            font-size: 0.95rem;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #fefefe;
+            resize: vertical;
+            line-height: 1.5;
+            transition: 0.2s;
+        }
+
+        textarea:focus {
+            border-color: #3a7ca5;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(58, 124, 165, 0.15);
+        }
+
+        button {
+            background: #2c5f8a;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 16px;
+            width: 100%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background: #1f4a6e;
+            transform: translateY(-1px);
+        }
+
+        .output-area {
+            margin-top: 28px;
+        }
+
+        .output-label {
+            font-weight: 600;
+            color: #1a2c3e;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .result-box {
+            background: #f8fafd;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 14px 16px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #0a2a3b;
+            word-break: break-all;
+            white-space: pre-wrap;
+            min-height: 80px;
+        }
+
+        .copy-btn {
+            background: #eef2f8;
+            color: #2c5f8a;
+            box-shadow: none;
+            margin-top: 12px;
+            width: auto;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+            width: auto;
+        }
+
+        .copy-btn:hover {
+            background: #e2e8f0;
+            transform: none;
+        }
+
+        .toast {
+            font-size: 0.75rem;
+            color: #2b6e3c;
+            background: #e6f4ea;
+            padding: 4px 12px;
+            border-radius: 30px;
+        }
+
+        hr {
+            margin: 16px 0;
+            border: none;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>📝 换行 → 英文分号</h2>
+    <div class="sub">每行一个期刊类别，点击按钮自动合并为一行，用英文分号「;」分隔</div>
+
+    <textarea id="inputText" rows="8" placeholder="权威三类
+权威二类
+权威四类
+未知
+其他
+SCI
+EI
+北图核心
+CSCD
+权威一类
+SSCI
+CSSCI
+A类期刊
+C类期刊"></textarea>
+
+    <button id="convertBtn">✨ 转换 → 英文分号连接</button>
+
+    <div class="output-area">
+        <div class="output-label">
+            <span>📋 转换结果（一行）</span>
+            <span id="copyMsg" class="toast" style="opacity:0;">已复制</span>
+        </div>
+        <div id="resultBox" class="result-box">点击上方按钮转换</div>
+        <button id="copyBtn" class="copy-btn">📋 复制结果</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const inputEl = document.getElementById('inputText');
+        const convertBtn = document.getElementById('convertBtn');
+        const resultBox = document.getElementById('resultBox');
+        const copyBtn = document.getElementById('copyBtn');
+        const copyMsg = document.getElementById('copyMsg');
+
+        // 核心转换：将输入框中的换行符替换为英文分号
+        // 规则：按行分割 -> trim每行 -> 过滤掉空行 -> 用 ";" 拼接
+        function convertToSemicolon(rawText) {
+            if (!rawText) return '';
+            // 按换行符分割（兼容 \n \r\n \r）
+            const lines = rawText.split(/\r?\n|\r/);
+            const validLines = lines
+                .map(line => line.trim())          // 去掉每行首尾空格
+                .filter(line => line !== '');      // 去掉空行
+            return validLines.join(';');
+        }
+
+        // 更新结果显示
+        function updateResult() {
+            const raw = inputEl.value;
+            const converted = convertToSemicolon(raw);
+            if (converted === '') {
+                resultBox.innerText = '(无有效内容)';
+                resultBox.style.color = '#8ba0b0';
+            } else {
+                resultBox.innerText = converted;
+                resultBox.style.color = '#0a2a3b';
+            }
+            // 每次转换时隐藏复制提示
+            hideCopyMsg();
+        }
+
+        // 显示短暂复制成功提示
+        let timeoutId = null;
+        function showCopyMsg() {
+            if (timeoutId) clearTimeout(timeoutId);
+            copyMsg.style.opacity = '1';
+            copyMsg.innerText = '✅ 已复制';
+            timeoutId = setTimeout(() => {
+                copyMsg.style.opacity = '0';
+                setTimeout(() => {
+                    if (copyMsg.innerText === '✅ 已复制') copyMsg.innerText = '已复制';
+                }, 150);
+            }, 1800);
+        }
+
+        function hideCopyMsg() {
+            if (timeoutId) clearTimeout(timeoutId);
+            copyMsg.style.opacity = '0';
+        }
+
+        // 复制结果到剪贴板
+        async function copyResult() {
+            const raw = inputEl.value;
+            const converted = convertToSemicolon(raw);
+            if (!converted) {
+                // 没有有效内容时提示
+                copyMsg.innerText = '⚠️ 无内容';
+                copyMsg.style.opacity = '1';
+                if (timeoutId) clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    copyMsg.style.opacity = '0';
+                    setTimeout(() => {
+                        if (copyMsg.innerText === '⚠️ 无内容') copyMsg.innerText = '已复制';
+                    }, 200);
+                }, 1200);
+                return;
+            }
+            try {
+                await navigator.clipboard.writeText(converted);
+                showCopyMsg();
+            } catch (err) {
+                // 降级方案
+                fallbackCopy(converted);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.top = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            let success = false;
+            try {
+                success = document.execCommand('copy');
+            } catch (e) {}
+            document.body.removeChild(textarea);
+            if (success) {
+                showCopyMsg();
+            } else {
+                copyMsg.innerText = '❌ 复制失败';
+                copyMsg.style.opacity = '1';
+                if (timeoutId) clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    copyMsg.style.opacity = '0';
+                    setTimeout(() => {
+                        if (copyMsg.innerText === '❌ 复制失败') copyMsg.innerText = '已复制';
+                    }, 200);
+                }, 1500);
+            }
+        }
+
+        // 绑定事件
+        convertBtn.addEventListener('click', updateResult);
+        copyBtn.addEventListener('click', copyResult);
+
+        // 可选：如果用户希望实时转换也可以，但根据要求只保留按钮转换，更清爽
+        // 但为了体验，默认展示一个示例转换效果（页面加载时转换一下初始占位内容）
+        // 这样用户打开页面就能看到示例效果（权威三类;权威二类;权威四类...）
+        if (inputEl.value.trim() !== '') {
+            updateResult();
+        } else {
+            // 如果textarea为空，设置一段简洁提示但不覆盖用户习惯
+            // 为了让用户看到效果，预置示例文本（但保持极简，仅作演示）
+            // 注意：不预设大段列表，仅设置几行常用示例，用户可随意修改。
+            if (inputEl.value === '') {
+                inputEl.value = '权威三类\n权威二类\n权威四类\n未知\nSCI\nEI';
+                updateResult();
+            }
+        }
+    })();
+</script>
+</body>
+</html>

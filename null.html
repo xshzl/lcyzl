@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>NULL格式转换器 - 一键转换复制</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', 'PingFang SC', Roboto, 'Helvetica Neue', sans-serif;
+            min-height: 100vh;
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .header {
+            background: linear-gradient(120deg, #1e293b, #0f172a);
+            padding: 24px 28px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header h1 span {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: normal;
+        }
+
+        .header p {
+            margin-top: 8px;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .content {
+            padding: 28px;
+        }
+
+        .section {
+            margin-bottom: 28px;
+        }
+
+        .section-label {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-label .badge {
+            background: #e2e8f0;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: normal;
+            color: #475569;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 16px;
+            font-family: 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            background: #fafcff;
+            resize: vertical;
+            transition: 0.2s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        button {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        button.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        button.primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        button.secondary {
+            background: #e2e8f0;
+        }
+
+        button.secondary:hover {
+            background: #cbd5e1;
+        }
+
+        button.copy-btn {
+            background: #10b981;
+            color: white;
+        }
+
+        button.copy-btn:hover {
+            background: #059669;
+        }
+
+        .output-area {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            position: relative;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .output-label {
+            font-weight: 600;
+            color: #0f172a;
+            font-size: 0.85rem;
+        }
+
+        .result-text {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-all;
+            border: 1px solid #e2e8f0;
+            min-height: 120px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .copy-status {
+            font-size: 0.75rem;
+            color: #10b981;
+            margin-left: 8px;
+        }
+
+        .example-row {
+            background: #f1f5f9;
+            padding: 12px 16px;
+            border-radius: 16px;
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: #475569;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .example-row code {
+            background: #e2e8f0;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+
+        hr {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        footer {
+            background: #f8fafc;
+            padding: 16px 28px;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #94a3b8;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="header">
+        <h1>
+            🔄 NULL格式转换器
+            <span>去括号 · 加文字</span>
+        </h1>
+        <p>把 (NULL) 9 8.91 → NULL共有9条占比8.91 %，支持批量转换，一键复制</p>
+    </div>
+    <div class="content">
+        <!-- 输入区 -->
+        <div class="section">
+            <div class="section-label">
+                📥 输入数据
+                <span class="badge">支持多行，空格/Tab分隔</span>
+            </div>
+            <textarea id="inputText" rows="5" placeholder="请输入数据，每行格式如：
+(NULL)	9	8.91
+(NULL)	45	44.55
+(NULL)	3	99.99"></textarea>
+            <div class="button-group">
+                <button id="convertBtn" class="primary">✨ 转换</button>
+                <button id="clearBtn" class="secondary">🗑️ 清空</button>
+                <button id="exampleBtn" class="secondary">📋 加载示例</button>
+            </div>
+        </div>
+
+        <!-- 输出区 -->
+        <div class="section">
+            <div class="section-label">
+                📤 转换结果
+                <span class="badge">格式：NULL共有X条占比Y %</span>
+            </div>
+            <div class="output-area">
+                <div class="output-header">
+                    <span class="output-label">✨ 转换后的文本</span>
+                    <button id="copyBtn" class="copy-btn" style="padding: 6px 18px;">📋 一键复制</button>
+                </div>
+                <div id="resultText" class="result-text">
+                    <span style="color: #94a3b8;">点击「转换」或「加载示例」查看结果</span>
+                </div>
+                <div id="copyMessage" style="margin-top: 8px; font-size: 0.7rem; text-align: right;"></div>
+            </div>
+        </div>
+
+        <!-- 提示示例 -->
+        <div class="example-row">
+            <span>💡 示例格式：</span>
+            <code>(NULL)	9	8.91</code>
+            <span>→</span>
+            <code>NULL共有9条占比8.91 %</code>
+            <span style="color: #10b981;">✓ 自动去掉括号和空格，加上「共有」「条」「占比」「%」</span>
+        </div>
+        <hr>
+        <div style="font-size: 0.75rem; color: #64748b; background: #fef9e6; padding: 8px 12px; border-radius: 16px;">
+            💡 提示：每行独立转换，支持制表符(Tab)或空格分隔。第一个数字是条数，第二个数字是占比。
+        </div>
+    </div>
+    <footer>
+        简单转换 · 去掉 (NULL) 括号，加上文字描述，保留原数值
+    </footer>
+</div>
+
+<script>
+    (function() {
+        // DOM 元素
+        const inputTextarea = document.getElementById('inputText');
+        const convertBtn = document.getElementById('convertBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const exampleBtn = document.getElementById('exampleBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const resultDiv = document.getElementById('resultText');
+        const copyMessageSpan = document.getElementById('copyMessage');
+
+        /**
+         * 核心转换函数：将一行或多行数据转换
+         * 输入格式：每行类似 "(NULL)	9	8.91" 或 "(NULL) 45 44.55"
+         * 输出格式：每行 "NULL共有9条占比8.91 %"
+         */
+        function convertLine(line) {
+            // 去除首尾空格
+            let trimmed = line.trim();
+            if (trimmed === "") {
+                return ""; // 空行返回空字符串，后续过滤掉
+            }
+            
+            // 匹配模式：开头可能有空格，然后是 (NULL) 或 (null) 不区分大小写，然后后面跟着数字(条数)和数字(占比)
+            // 支持制表符或空格分隔，中间可以有多个空白
+            // 正则：捕获第一个数字（条数），第二个数字（占比）
+            // 格式：(NULL) 后面跟任意空白，然后数字，再任意空白，然后数字（可能是小数）
+            const regex = /^\s*\(NULL\)\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)/i;
+            const match = trimmed.match(regex);
+            
+            if (match) {
+                const count = match[1];   // 条数
+                const percent = match[2]; // 占比数值
+                // 按照要求输出：NULL共有X条占比Y %
+                return `NULL共有${count}条占比${percent} %`;
+            } else {
+                // 如果匹配不上，尝试更宽松的模式：允许任何前缀为(NULL)的格式，尽量提取两个数字
+                // 备用方案：提取数字序列，取前两个数字
+                const numberRegex = /\d+(?:\.\d+)?/g;
+                const numbers = trimmed.match(numberRegex);
+                if (numbers && numbers.length >= 2) {
+                    // 如果有至少两个数字，第一个当条数，第二个当占比
+                    return `NULL共有${numbers[0]}条占比${numbers[1]} %`;
+                }
+                // 完全无法解析，保留原行并加警告标记（但为了不丢失数据，返回原行加提示）
+                return `[无法解析] ${trimmed}`;
+            }
+        }
+
+        /**
+         * 批量转换整个文本
+         * @param {string} rawText 原始文本
+         * @returns {string} 转换后的文本
+         */
+        function convertAll(rawText) {
+            if (!rawText || rawText.trim() === "") {
+                return "";
+            }
+            
+            const lines = rawText.split(/\r?\n/);
+            const convertedLines = [];
+            
+            for (let line of lines) {
+                const converted = convertLine(line);
+                if (converted !== "") {  // 空行跳过，不输出空行
+                    convertedLines.push(converted);
+                }
+            }
+            
+            return convertedLines.join('\n');
+        }
+
+        /**
+         * 执行转换并更新界面
+         */
+        function doConvert() {
+            const rawInput = inputTextarea.value;
+            if (!rawInput.trim()) {
+                resultDiv.innerHTML = '<span style="color: #94a3b8;">⚠️ 请在上方输入数据，例如：(NULL)	9	8.91</span>';
+                copyMessageSpan.innerHTML = '';
+                return;
+            }
+            
+            const result = convertAll(rawInput);
+            if (result === "") {
+                resultDiv.innerHTML = '<span style="color: #94a3b8;">⚠️ 没有有效数据行，请检查格式</span>';
+                copyMessageSpan.innerHTML = '';
+                return;
+            }
+            
+            // 显示结果（保留换行）
+            resultDiv.innerHTML = escapeHtml(result);
+            copyMessageSpan.innerHTML = ''; // 清除复制提示
+        }
+
+        /**
+         * 简单的防XSS
+         */
+        function escapeHtml(str) {
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
+                .replace(/\n/g, '<br>');
+        }
+
+        /**
+         * 复制结果到剪贴板
+         */
+        function copyResult() {
+            const resultText = getPlainResult();
+            if (!resultText || resultText.trim() === "" || resultText.includes("请在上方输入数据") || resultText.includes("没有有效数据")) {
+                // 检查是否有实际转换内容
+                const rawInput = inputTextarea.value;
+                if (!rawInput.trim()) {
+                    showCopyMessage("⚠️ 没有可复制的内容，请先输入数据并点击「转换」", false);
+                    return;
+                }
+                const converted = convertAll(rawInput);
+                if (!converted) {
+                    showCopyMessage("⚠️ 转换结果为空，无法复制", false);
+                    return;
+                }
+                copyToClipboard(converted);
+            } else {
+                // 从显示区获取纯文本（需要把<br>还原成换行）
+                const plainText = getPlainResult();
+                copyToClipboard(plainText);
+            }
+        }
+        
+        function getPlainResult() {
+            // 从resultDiv获取纯文本（把<br>替换回\n）
+            let html = resultDiv.innerHTML;
+            if (!html || html.includes("请在上方输入数据")) {
+                // 尝试重新转换获取
+                const raw = inputTextarea.value;
+                if (raw.trim()) {
+                    return convertAll(raw);
+                }
+                return "";
+            }
+            // 将 <br> 替换为换行符
+            let text = html.replace(/<br\s*\/?>/gi, '\n');
+            // 去掉其他HTML标签（如果有）
+            text = text.replace(/<[^>]*>/g, '');
+            return text;
+        }
+        
+        function copyToClipboard(text) {
+            if (!text || text.trim() === "") {
+                showCopyMessage("❌ 无内容可复制", false);
+                return;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showCopyMessage("✅ 复制成功！", true);
+            }).catch(err => {
+                console.error('复制失败:', err);
+                // 降级方案
+                fallbackCopy(text);
+            });
+        }
+        
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showCopyMessage("✅ 复制成功！", true);
+            } catch (err) {
+                showCopyMessage("❌ 复制失败，请手动复制", false);
+            }
+            document.body.removeChild(textarea);
+        }
+        
+        function showCopyMessage(msg, isSuccess) {
+            copyMessageSpan.innerHTML = msg;
+            copyMessageSpan.style.color = isSuccess ? '#10b981' : '#ef4444';
+            setTimeout(() => {
+                copyMessageSpan.innerHTML = '';
+            }, 2000);
+        }
+        
+        /**
+         * 清空输入和输出
+         */
+        function clearAll() {
+            inputTextarea.value = '';
+            resultDiv.innerHTML = '<span style="color: #94a3b8;">✨ 已清空，输入数据后点击「转换」</span>';
+            copyMessageSpan.innerHTML = '';
+        }
+        
+        /**
+         * 加载示例
+         */
+        function loadExample() {
+            // 提供多种示例，包括多行、不同占比
+            const example = `(NULL)	9	8.91
+(NULL)	45	44.55
+(NULL)	123	67.89
+(NULL)	3	99.99`;
+            inputTextarea.value = example;
+            doConvert(); // 自动转换
+        }
+        
+        // 绑定事件
+        convertBtn.addEventListener('click', doConvert);
+        clearBtn.addEventListener('click', clearAll);
+        exampleBtn.addEventListener('click', loadExample);
+        copyBtn.addEventListener('click', copyResult);
+        
+        // 可选：页面加载时设置一个友好的示例展示，但不自动转换，等用户操作
+        // 但为了更友好，可以让textarea placeholder展示示例，也可以设置一个初始演示
+        // 为了直观，不自动转换，但可以展示提示。
+        resultDiv.innerHTML = '<span style="color: #94a3b8;">点击「加载示例」或输入数据后点「转换」</span>';
+        
+        // 增加快捷键: Ctrl+Enter 转换
+        inputTextarea.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                doConvert();
+            }
+        });
+        
+        // 额外监听双击复制快捷操作（可选，方便）
+        resultDiv.addEventListener('dblclick', () => {
+            copyResult();
+        });
+    })();
+</script>
+</body>
+</html>
