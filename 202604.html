@@ -351,23 +351,49 @@
             margin-right: 0.5rem;
         }
 
-        .phase-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 0.6rem;
+        /* ========= 项目周期表格样式 ========= */
+        .project-timeline {
             margin-top: 0.5rem;
         }
-        .phase-card {
-            background: rgba(30, 35, 55, 0.5);
+        .timeline-summary {
+            background: rgba(30, 35, 55, 0.4);
             border-radius: 0.8rem;
-            padding: 0.5rem;
-            text-align: center;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: #c0ceff;
+            border-left: 3px solid #8aa2ff;
         }
-        .phase-name { font-weight: 600; color: #8aa2ff; font-size: 0.7rem; }
-        .phase-duration { font-size: 0.6rem; color: #c0ceff; }
-
-        hr { border-color: rgba(255,255,255,0.05); margin: 1rem 0; }
-        .footer-note { text-align: center; margin-top: 2rem; font-size: 0.7rem; color: #5f6b8a; }
+        .timeline-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .timeline-table th {
+            text-align: left;
+            padding: 0.8rem 0.5rem;
+            color: #8aa2ff;
+            font-weight: 600;
+            font-size: 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .timeline-table td {
+            padding: 0.8rem 0.5rem;
+            color: #c0ceff;
+            font-size: 0.75rem;
+            vertical-align: top;
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+        }
+        .timeline-table tr:last-child td {
+            border-bottom: none;
+        }
+        .phase-badge {
+            background: rgba(100, 130, 240, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            display: inline-block;
+        }
 
         @media (max-width: 800px) {
             body { padding: 1rem; }
@@ -375,6 +401,7 @@
             .page-header h1 { font-size: 1.6rem; }
             .two-columns { grid-template-columns: 1fr; }
             .metric-number { font-size: 1.6rem; }
+            .timeline-table th, .timeline-table td { font-size: 0.7rem; padding: 0.5rem 0.3rem; }
         }
     </style>
 </head>
@@ -395,7 +422,7 @@
             <div class="card-title"><i class="fas fa-user-astronaut"></i> 个人简介</div>
             <div class="info-row"><div class="info-label">姓名</div><div class="info-value">许仕浩</div></div>
             <div class="info-row"><div class="info-label">毕业院校</div><div class="info-value">河南农业大学 · 计算机科学与技术</div></div>
-            <div class="info-row"><div class="info-label">入职时间</div><div class="info-value">待通知（小道消息 5.10 后）</div></div>
+            <div class="info-row"><div class="info-label">答辩时间</div><div class="info-value">待通知（小道消息 5.10 后）</div></div>
             <div class="info-row"><div class="info-label">擅长领域</div><div class="info-value">擅长取巧（总是想最优解快速做完，然后我就可以歇着了）</div></div>
             <div class="info-row"><div class="info-label">外部证书</div><div class="info-value">🚗 驾驶证</div></div>
         </div>
@@ -411,16 +438,27 @@
         </div>
     </div>
 
-    <!-- 项目周期 -->
+    <!-- 项目周期（详细表格版） -->
     <div class="card">
         <div class="card-title"><i class="fas fa-timeline"></i> 项目周期</div>
-        <div class="phase-grid">
-            <div class="phase-card"><div class="phase-name">🚀 项目启动</div><div class="phase-duration">5工作日内</div></div>
-            <div class="phase-card"><div class="phase-name">📋 需求调研</div><div class="phase-duration">≤30日历日</div></div>
-            <div class="phase-card"><div class="phase-name">⚙️ 开发部署</div><div class="phase-duration">≤90日历日</div></div>
-            <div class="phase-card"><div class="phase-name">🧪 试运行</div><div class="phase-duration">≥30自然日</div></div>
-            <div class="phase-card"><div class="phase-name">✅ 验收</div><div class="phase-duration">15工作日内</div></div>
-            <div class="phase-card"><div class="phase-name">🔧 售后</div><div class="phase-duration">36个月质保</div></div>
+        <div class="project-timeline">
+            <div class="timeline-summary">
+                📅 自合同签订之日起 ≤ 150 日历日完成交付、安装、调试及上线试运行。<br>
+                📄 合同签署时间：<strong>2025年12月</strong>
+            </div>
+            <table class="timeline-table">
+                <thead>
+                    <tr><th>阶段</th><th>周期</th><th>完成内容</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><span class="phase-badge">1. 项目启动</span></td><td>合同生效后 5个工作日内</td><td>乙方须成立专项组、提交实施计划、召开启动会；甲方配合指定对接人与协调资源。</td></tr>
+                    <tr><td><span class="phase-badge">2. 需求调研与方案确认</span></td><td>启动后 ≤ 30日历日</td><td>需覆盖校级职能部门+全部院系，输出《需求规格说明书》并经双方签字确认；此为后续开发前提。</td></tr>
+                    <tr><td><span class="phase-badge">3. 安装部署与系统开发/定制</span></td><td>需求确认后 ≤ 90日历日</td><td>含环境搭建、平台部署、功能开发、接口联调、数据迁移、安全加固等；需适配国产信创环境（麒麟OS/达梦DB/TongWeb等）。</td></tr>
+                    <tr><td><span class="phase-badge">4. 试运行</span></td><td>≥ 30个自然日</td><td>系统上线后连续稳定运行不少于30天，期间乙方提供驻场支持，记录并修复问题；试运行结束即启动验收流程。</td></tr>
+                    <tr><td><span class="phase-badge">5. 项目验收</span></td><td>试运行结束后 15个工作日内完成</td><td>分两阶段：<br>• 初验：乙方提交全套文档+源码+等保报告，甲方组织测试；<br>• 终验：初验通过后，双方签署《总验收报告》。</td></tr>
+                    <tr><td><span class="phase-badge">6. 售后服务时长</span></td><td>36个月（3年）质保期</td><td>自《总验收报告》签署日起算；覆盖Bug修复、安全漏洞响应、性能优化、免费巡检（每年4次）、培训支持等。</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
