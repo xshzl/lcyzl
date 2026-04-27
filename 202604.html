@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>2026年4月 · 月度总结</title>
+    <title>2026年三四月 · 月度总结报告</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -36,7 +36,7 @@
         }
 
         .report-container {
-            max-width: 1100px;
+            max-width: 1400px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
@@ -55,10 +55,9 @@
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
-            /* transition: all 0.25s ease; */
             margin-bottom: 2rem;
+            transition: all 0.2s ease;
         }
-
         .back-home:hover {
             background: rgba(55, 70, 120, 0.9);
             border-color: rgba(150, 180, 255, 0.6);
@@ -68,13 +67,12 @@
 
         .page-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
-
         .month-badge {
             display: inline-block;
             background: linear-gradient(135deg, #3a4c8c, #5f7bc0);
-            padding: 0.3rem 1.2rem;
+            padding: 0.3rem 1.5rem;
             border-radius: 40px;
             font-size: 0.8rem;
             font-weight: 600;
@@ -82,7 +80,6 @@
             letter-spacing: 1px;
             margin-bottom: 1rem;
         }
-
         .page-header h1 {
             font-size: 2.5rem;
             font-weight: 700;
@@ -92,156 +89,206 @@
             color: transparent;
         }
 
-        .card {
-            background: rgba(12, 15, 22, 0.7);
-            backdrop-filter: blur(12px);
-            border-radius: 1.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 1.8rem 2rem;
+        .two-columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 1.8rem;
             margin-bottom: 1.8rem;
         }
 
+        .card {
+            background: rgba(12, 15, 22, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+            height: fit-content;
+        }
+        .card:hover {
+            background: rgba(18, 22, 32, 0.85);
+            border-color: rgba(100, 130, 240, 0.25);
+        }
         .card-title {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            font-size: 1.3rem;
+            gap: 0.7rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: #eef3ff;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid #6d86e0;
-            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+            border-left: 3px solid #6d86e0;
+            padding-left: 0.8rem;
         }
-
         .card-title i {
             color: #8aa2ff;
         }
 
-        .output-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1rem;
-        }
-
-        .stat-card {
-            background: rgba(25, 30, 48, 0.6);
+        /* 学科建设进度 - 强化对比 */
+        .progress-showcase {
+            background: linear-gradient(135deg, rgba(25, 30, 48, 0.6), rgba(20, 24, 38, 0.4));
             border-radius: 1.2rem;
             padding: 1.2rem;
-            border: 1px solid rgba(255,255,255,0.04);
-            cursor: pointer;
-            /* transition: all 0.2s ease; */
+            margin-bottom: 0.5rem;
         }
-
-        .stat-card:hover {
-            background: rgba(45, 55, 85, 0.8);
-            transform: translateY(-3px);
-            border-color: rgba(100, 130, 240, 0.4);
+        .metric-pair {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
         }
-
-        .stat-number {
-            font-size: 2rem;
+        .metric-card {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
+            padding: 0.8rem;
+            text-align: center;
+        }
+        .metric-number {
+            font-size: 2.2rem;
             font-weight: 800;
             background: linear-gradient(135deg, #c0ceff, #a0b4f0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            line-height: 1;
+            line-height: 1.2;
         }
-
-        .stat-label {
-            color: #9aa9ce;
-            font-size: 0.85rem;
-            margin-top: 0.4rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            background: rgba(100, 130, 240, 0.2);
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
+        .metric-label {
             font-size: 0.7rem;
-            color: #b8cbff;
+            color: #9aa9ce;
+            margin-top: 0.2rem;
         }
-
-        .detail-text {
-            color: #b8c4e6;
-            font-size: 0.8rem;
+        .double-bar {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
             margin-top: 0.5rem;
-            border-top: 1px dashed rgba(255,255,255,0.08);
+        }
+        .bar-item {
+            flex: 1;
+        }
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            margin-bottom: 0.2rem;
+        }
+        .bar-label span:first-child { color: #8aa2ff; }
+        .bar-label span:last-child { color: #c0ceff; font-weight: 600; }
+        .bar-bg {
+            height: 10px;
+            background: #2a2e45;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            border-radius: 8px;
+            width: 0%;
+        }
+        .fill-done { background: linear-gradient(90deg, #5f7bc0, #8aa2ff); }
+        .fill-remain { background: #4a5a8a; opacity: 0.5; }
+
+        .progress-ratio {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #8aa2ff;
+            margin-top: 0.8rem;
             padding-top: 0.5rem;
+            border-top: 1px dashed rgba(255,255,255,0.1);
         }
 
-        .item-list {
+        /* 产出条目独立行 */
+        .output-list {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.8rem;
         }
-
-        .list-item {
+        .output-row {
             display: flex;
             align-items: center;
             gap: 1rem;
             background: rgba(20, 24, 38, 0.5);
-            padding: 0.8rem 1.2rem;
+            padding: 0.9rem 1rem;
             border-radius: 1rem;
+            transition: 0.2s;
         }
-
-        .list-icon {
-            width: 36px;
-            height: 36px;
+        .output-row:hover {
+            background: rgba(55, 65, 95, 0.6);
+            transform: translateX(4px);
+        }
+        .output-icon {
+            width: 40px;
+            height: 40px;
             background: rgba(100, 130, 240, 0.2);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #8aa2ff;
+            font-size: 1.2rem;
         }
-
-        .list-title {
-            font-weight: 600;
+        .output-content {
+            flex: 1;
+        }
+        .output-title {
+            font-weight: 700;
             color: #eef3ff;
+            font-size: 1rem;
         }
-
-        .list-desc {
-            font-size: 0.8rem;
+        .output-desc {
+            font-size: 0.75rem;
             color: #9aa9ce;
         }
 
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 0.7rem;
+            font-size: 0.85rem;
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+            padding-bottom: 0.4rem;
+        }
+        .info-label {
+            width: 100px;
+            color: #8aa2ff;
+            font-weight: 500;
+        }
+        .info-value {
+            flex: 1;
+            color: #c0ceff;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .tag {
+            background: rgba(100, 130, 240, 0.15);
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: #b8cbff;
+        }
+
         .progress-item {
-            margin-bottom: 1.2rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 1rem;
-            /* transition: all 0.2s ease; */
+            margin-bottom: 1rem;
         }
-
-        .progress-item:hover {
-            background: rgba(45, 55, 85, 0.4);
-            transform: translateX(4px);
-        }
-
-        .progress-item:last-child {
-            margin-bottom: 0;
-        }
-
         .progress-label {
             display: flex;
             justify-content: space-between;
             color: #c0ceff;
-            font-size: 0.85rem;
-            margin-bottom: 0.4rem;
+            font-size: 0.8rem;
+            margin-bottom: 0.3rem;
         }
-
         .progress-bar-bg {
-            height: 8px;
+            height: 6px;
             background: rgba(30, 35, 55, 0.8);
             border-radius: 10px;
             overflow: hidden;
         }
-
         .progress-fill {
             height: 100%;
             border-radius: 10px;
@@ -249,216 +296,85 @@
             width: 0%;
         }
 
-        .footer-note {
-            text-align: center;
-            margin-top: 2rem;
-            font-size: 0.7rem;
-            color: #5f6b8a;
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            background: rgba(20, 24, 38, 0.4);
+            padding: 0.7rem;
+            border-radius: 0.8rem;
+            margin-bottom: 0.6rem;
         }
-
-        /* 模态框样式 - 字段列表 */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.88);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
+        .list-icon {
+            width: 28px;
+            height: 28px;
+            background: rgba(100, 130, 240, 0.2);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            visibility: hidden;
-            opacity: 0;
-            /* transition: all 0.2s ease; */
-        }
-
-        .modal-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .modal-container {
-            background: #0f1220;
-            border-radius: 1.5rem;
-            max-width: 750px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            padding: 1.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 25px 40px rgba(0,0,0,0.5);
-        }
-
-        .modal-container h3 {
-            color: white;
-            margin-bottom: 1.2rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 0.8rem;
-            position: sticky;
-            top: 0;
-            background: #0f1220;
-            z-index: 10;
-        }
-
-        .modal-container h3 i {
             color: #8aa2ff;
+            font-size: 0.8rem;
+        }
+        .list-content {
+            flex: 1;
+        }
+        .list-title {
+            font-weight: 600;
+            color: #eef3ff;
+            font-size: 0.85rem;
+        }
+        .list-desc {
+            font-size: 0.75rem;
+            color: #9aa9ce;
         }
 
-        .field-list {
+        /* 问题列表特殊样式 - 清晰分行 */
+        .question-list {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            font-family: 'Monaco', 'Menlo', monospace;
-            font-size: 0.75rem;
-            color: #b8c4e6;
+            gap: 1rem;
+        }
+        .question-item {
+            background: rgba(30, 35, 55, 0.6);
+            border-radius: 1rem;
+            padding: 1rem;
+            border-left: 3px solid #ffaa66;
+        }
+        .question-text {
+            color: #eef3ff;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .question-text i {
+            color: #ffaa66;
+            margin-right: 0.5rem;
         }
 
-        .field-group {
-            background: rgba(25, 30, 48, 0.5);
-            border-radius: 0.8rem;
-            padding: 0.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .table-name {
-            color: #8aa2ff;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 0.8rem;
-            border-left: 2px solid #6d86e0;
-            padding-left: 0.6rem;
-        }
-
-        .field-item {
-            padding: 0.2rem 0 0.2rem 1.5rem;
-            color: #c0ceff;
-            font-size: 0.7rem;
-            font-family: monospace;
-        }
-
-        .close-modal {
-            background: rgba(100, 130, 240, 0.2);
-            border: 1px solid rgba(100, 130, 240, 0.4);
-            color: #c0ceff;
-            padding: 0.4rem 1.2rem;
-            border-radius: 30px;
-            cursor: pointer;
-            margin-top: 1.2rem;
-            width: fit-content;
-        }
-
-        .close-modal:hover {
-            background: rgba(100, 130, 240, 0.4);
-        }
-
-        /* 居中提示弹窗 - 通用内容弹窗 */
-        .alert-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.88);
-            backdrop-filter: blur(12px);
-            z-index: 1100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            visibility: hidden;
-            opacity: 0;
-            /* transition: all 0.2s ease; */
-        }
-
-        .alert-modal.active {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .alert-card {
-            background: #0f1220;
-            border-radius: 1.5rem;
-            max-width: 650px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            padding: 1.8rem;
-            border: 1px solid rgba(100, 130, 240, 0.4);
-            box-shadow: 0 20px 35px rgba(0,0,0,0.5);
-        }
-
-        .alert-card h3 {
-            color: white;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
+        .phase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 0.6rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 0.8rem;
-            position: sticky;
-            top: 0;
-            background: #0f1220;
-            z-index: 10;
-        }
-
-        .alert-card h3 i {
-            color: #8aa2ff;
-        }
-
-        .alert-content {
-            color: #c0ceff;
-            font-size: 0.85rem;
-            line-height: 1.6;
-            margin: 1rem 0;
-        }
-
-        .alert-content ul, .alert-content ol {
-            padding-left: 1.5rem;
-            margin: 0.5rem 0;
-        }
-
-        .alert-content li {
-            margin: 0.3rem 0;
-        }
-
-        .alert-content p {
-            margin: 0.5rem 0;
-        }
-
-        .alert-content h4 {
-            color: #8aa2ff;
-            margin: 0.8rem 0 0.3rem 0;
-        }
-
-        .alert-card button {
-            background: linear-gradient(135deg, #3a4c8c, #5f7bc0);
-            border: none;
-            padding: 0.6rem 1.8rem;
-            border-radius: 40px;
-            color: white;
-            font-weight: 500;
-            cursor: pointer;
-            /* transition: all 0.2s; */
             margin-top: 0.5rem;
         }
-
-        .alert-card button:hover {
-            transform: scale(1.02);
-            opacity: 0.9;
+        .phase-card {
+            background: rgba(30, 35, 55, 0.5);
+            border-radius: 0.8rem;
+            padding: 0.5rem;
+            text-align: center;
         }
+        .phase-name { font-weight: 600; color: #8aa2ff; font-size: 0.7rem; }
+        .phase-duration { font-size: 0.6rem; color: #c0ceff; }
 
-        @media (max-width: 700px) {
+        hr { border-color: rgba(255,255,255,0.05); margin: 1rem 0; }
+        .footer-note { text-align: center; margin-top: 2rem; font-size: 0.7rem; color: #5f6b8a; }
+
+        @media (max-width: 800px) {
             body { padding: 1rem; }
-            .card { padding: 1.2rem; }
-            .page-header h1 { font-size: 1.8rem; }
-            .modal-container { padding: 1.2rem; }
-            .alert-card { padding: 1.2rem; }
-            .alert-content { font-size: 0.75rem; }
+            .card { padding: 1rem; }
+            .page-header h1 { font-size: 1.6rem; }
+            .two-columns { grid-template-columns: 1fr; }
+            .metric-number { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -469,350 +385,200 @@
     </a>
 
     <div class="page-header">
-        <div class="month-badge">2026年4月 · 月度总结</div>
-        <h1>四月份总结汇报</h1>
+        <div class="month-badge">📅 2026年 3月4月 · 月度总结报告</div>
+        <h1>西安石油大学 · 事业发展效益分析项目</h1>
     </div>
 
-    <!-- 产出部分 -->
-    <div class="card">
-        <div class="card-title">
-            <i class="fas fa-chart-line"></i>
-            <span>产出</span>
+    <!-- 个人信息 + 项目概况 -->
+    <div class="two-columns">
+        <div class="card">
+            <div class="card-title"><i class="fas fa-user-astronaut"></i> 个人简介</div>
+            <div class="info-row"><div class="info-label">姓名</div><div class="info-value">许仕浩</div></div>
+            <div class="info-row"><div class="info-label">毕业院校</div><div class="info-value">河南农业大学 · 计算机科学与技术</div></div>
+            <div class="info-row"><div class="info-label">入职时间</div><div class="info-value">待通知（小道消息 5.10 后）</div></div>
+            <div class="info-row"><div class="info-label">擅长领域</div><div class="info-value">擅长取巧（总是想最优解快速做完，然后我就可以歇着了）</div></div>
+            <div class="info-row"><div class="info-label">外部证书</div><div class="info-value">🚗 驾驶证</div></div>
         </div>
-        <div class="output-grid">
-            <div class="stat-card" id="fieldsCard">
-                <div class="stat-number">145</div>
-                <div class="stat-label">科研数据字段<span class="badge">个</span></div>
-                <div class="detail-text">检查并进行分析错误</div>
-            </div>
-            <div class="stat-card" id="problemCard">
-                <div class="stat-number">110</div>
-                <div class="stat-label">问题字段<span class="badge">个</span></div>
-                <div class="detail-text">证据：IDEA 有相关 SQL 内容</div>
-            </div>
-            <div class="stat-card" id="sqlCard">
-                <div class="stat-number">281</div>
-                <div class="stat-label">SQL 代码 <span class="badge">行</span></div>
-                <div class="detail-text">数据检验与分析</div>
-            </div>
-            <div class="stat-card" id="pythonCard">
-                <div class="stat-number">388</div>
-                <div class="stat-label">Python 脚本 <span class="badge">行</span></div>
-                <div class="detail-text">自动化分析处理</div>
-            </div>
-            <div class="stat-card" id="etlCard">
-                <div class="stat-number">2</div>
-                <div class="stat-label">ETL任务 <span class="badge">个</span></div>
-                <div class="detail-text">往人事系统推数据</div>
-            </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-chart-pie"></i> 项目概况</div>
+            <div class="info-row"><div class="info-label">项目编号</div><div class="info-value">UK26003</div></div>
+            <div class="info-row"><div class="info-label">项目名称</div><div class="info-value">西安石油大学事业发展效益分析项目</div></div>
+            <div class="info-row"><div class="info-label">项目经理</div><div class="info-value">司新亚</div></div>
+            <div class="info-row"><div class="info-label">实施预算</div><div class="info-value">22.05 人/月</div></div>
+            <div class="info-row"><div class="info-label">可变预算/提报</div><div class="info-value">40,000 元 / 5,457 元</div></div>
+            <div class="info-row"><div class="info-label">合同履约</div><div class="info-value">≤150日历日完成交付（2025.12签署）</div></div>
         </div>
     </div>
 
-    <!-- 项目及任务 -->
+    <!-- 项目周期 -->
     <div class="card">
-        <div class="card-title">
-            <i class="fas fa-briefcase"></i>
-            <span>项目及任务</span>
+        <div class="card-title"><i class="fas fa-timeline"></i> 项目周期</div>
+        <div class="phase-grid">
+            <div class="phase-card"><div class="phase-name">🚀 项目启动</div><div class="phase-duration">5工作日内</div></div>
+            <div class="phase-card"><div class="phase-name">📋 需求调研</div><div class="phase-duration">≤30日历日</div></div>
+            <div class="phase-card"><div class="phase-name">⚙️ 开发部署</div><div class="phase-duration">≤90日历日</div></div>
+            <div class="phase-card"><div class="phase-name">🧪 试运行</div><div class="phase-duration">≥30自然日</div></div>
+            <div class="phase-card"><div class="phase-name">✅ 验收</div><div class="phase-duration">15工作日内</div></div>
+            <div class="phase-card"><div class="phase-name">🔧 售后</div><div class="phase-duration">36个月质保</div></div>
         </div>
-        <div class="item-list">
-            <!-- <div class="list-item">
-                <div class="list-icon"><i class="fas fa-gavel"></i></div>
-                <div class="list-content">
-                    <div class="list-title">西安理工大学 · 投标事宜</div>
-                    <div class="list-desc">参与投标相关工作</div>
+    </div>
+
+    <!-- 学科建设大数据分析中心 - 强化进度对比 -->
+    <div class="card">
+        <div class="card-title"><i class="fas fa-chart-line"></i> 学科建设大数据分析中心 · 进度对比</div>
+        <div class="progress-showcase">
+            <div class="metric-pair">
+                <div class="metric-card">
+                    <div class="metric-number">38</div>
+                    <div class="metric-label">主题层拉链表总数</div>
                 </div>
-            </div> -->
-            <!-- <div class="list-item">
-                <div class="list-icon"><i class="fas fa-exchange-alt"></i></div>
-                <div class="list-content">
-                    <div class="list-title">ETL 任务</div>
-                    <div class="list-desc">完成 2 个 ETL 任务</div>
+                <div class="metric-card">
+                    <div class="metric-number">19</div>
+                    <div class="metric-label">✅ 已完成拉链表</div>
                 </div>
-            </div> -->
+                <div class="metric-card">
+                    <div class="metric-number">19</div>
+                    <div class="metric-label">⏳ 剩余拉链表</div>
+                </div>
+            </div>
+            <div class="double-bar">
+                <div class="bar-item">
+                    <div class="bar-label"><span>已完成拉链表占比</span><span>50%</span></div>
+                    <div class="bar-bg"><div class="bar-fill fill-done" style="width: 50%;"></div></div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label"><span>剩余拉链表占比</span><span>50%</span></div>
+                    <div class="bar-bg"><div class="bar-fill fill-remain" style="width: 50%;"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-showcase">
+            <div class="metric-pair">
+                <div class="metric-card">
+                    <div class="metric-number">595</div>
+                    <div class="metric-label">总字段数</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">311</div>
+                    <div class="metric-label">✅ 已完成字段映射</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">284</div>
+                    <div class="metric-label">⏳ 剩余字段</div>
+                </div>
+            </div>
+            <div class="double-bar">
+                <div class="bar-item">
+                    <div class="bar-label"><span>已完成字段占比</span><span>52.3%</span></div>
+                    <div class="bar-bg"><div class="bar-fill fill-done" style="width: 52.3%;"></div></div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label"><span>剩余字段占比</span><span>47.7%</span></div>
+                    <div class="bar-bg"><div class="bar-fill fill-remain" style="width: 47.7%;"></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="progress-ratio">
+            📊 已完成字段映射 311 / 595，覆盖率 <strong>52.3%</strong> | 拉链表完成 <strong>50%</strong>
+        </div>
+        <div class="tags"><span class="tag">已记录来源表/来源字段/存在问题/范例数据值</span></div>
+    </div>
+
+    <!-- 我方负责内容 + 产出对比 + 独立产出行 -->
+    <div class="two-columns">
+        <div class="card">
+            <div class="card-title"><i class="fas fa-user-check"></i> 我方负责内容</div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-layer-group"></i></div><div class="list-content"><div class="list-title">数据基座 · 主题层模型转换</div><div class="list-desc">从贴源层映射，记录来源表/处理过程/目标表/问题字段/期望值</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-exchange-alt"></i></div><div class="list-content"><div class="list-title">人事考核系统对接（ETL）</div><div class="list-desc">17张表，已授权13个数据集，创建15个ETL任务，记录完整溯源</div></div></div>
+            <div class="metric-pair" style="margin-top: 0.5rem;">
+                <div class="metric-card"><div class="metric-number">17</div><div class="metric-label">人事考核表总数</div></div>
+                <div class="metric-card"><div class="metric-number">13</div><div class="metric-label">已授权数据集</div></div>
+                <div class="metric-card"><div class="metric-number">15</div><div class="metric-label">ETL任务数</div></div>
+            </div>
+            <div class="progress-item" style="margin-top: 0.5rem;">
+                <div class="progress-label"><span>项目整体进度</span><span>5.12%</span></div>
+                <div class="progress-bar-bg"><div class="progress-fill" style="width: 5.12%;"></div></div>
+            </div>
+        </div>
+
+        <!-- 产出量独立展示 -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-cogs"></i> 本月产出清单</div>
+            <div class="output-list">
+                <div class="output-row"><div class="output-icon"><i class="fas fa-code"></i></div><div class="output-content"><div class="output-title">SQL 代码</div><div class="output-desc">≥ 1,751 行 · 数据检验/模型转换/ETL逻辑</div></div></div>
+                <div class="output-row"><div class="output-icon"><i class="fas fa-box-archive"></i></div><div class="output-content"><div class="output-title">cdsp-manager 更新</div><div class="output-desc">更新 jar 包 1 次 · 服务迭代</div></div></div>
+                <div class="output-row"><div class="output-icon"><i class="fab fa-python"></i></div><div class="output-content"><div class="output-title">Python 脚本</div><div class="output-desc">可复用脚本：导出已模型转换表每个字段的数据量/总体占比Excel</div></div></div>
+                <div class="output-row"><div class="output-icon"><i class="fas fa-user-secret"></i></div><div class="output-content"><div class="output-title">油猴脚本 (Tampermonkey)</div><div class="output-desc">一键复制ETL任务的数据集字段/目标端字段/已映射字段（解决显示不全问题）</div></div></div>
+            </div>
+            <div class="tags"><span class="tag">外部事务：西安理工大学投标1次</span><span class="tag">西安电子科技大学社区送温暖1次</span></div>
         </div>
     </div>
 
-    <!-- 学习进度 -->
+    <!-- 证据 + 学习进度 -->
+    <div class="two-columns">
+        <div class="card">
+            <div class="card-title"><i class="fas fa-sticky-note"></i> 过程证据</div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-calendar-day"></i></div><div class="list-content"><div class="list-title">日报记录</div><div class="list-desc">每日详细工作内容</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-database"></i></div><div class="list-content"><div class="list-title">IDEA SQL记录</div><div class="list-desc">每次查询SQL归档</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-comments"></i></div><div class="list-content"><div class="list-title">聊天记录</div><div class="list-desc">司新亚(项目经理/导师)/张浩泽(导师)/张小平(BA)/李景松(办1主管)/张庭玉/高国强(总监)</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-markdown"></i></div><div class="list-content"><div class="list-title">uTools Markdown</div><div class="list-desc">复制粘贴中转记录</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-lock"></i></div><div class="list-content"><div class="list-title">脚本独有</div><div class="list-desc">Python脚本+油猴脚本仅本人持有</div></div></div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-graduation-cap"></i> 学习进度（e1/e2对标）</div>
+            <div class="progress-item"><div class="progress-label"><span>操作熟练度</span><span>90%</span></div><div class="progress-bar-bg"><div class="progress-fill" style="width: 90%;"></div></div></div>
+            <div class="progress-item"><div class="progress-label"><span>理论掌握度</span><span>尚存欠缺</span></div><div class="progress-bar-bg"><div class="progress-fill" style="width: 70%;"></div></div></div>
+            <div class="progress-item"><div class="progress-label"><span>通识类技能</span><span>80%</span></div><div class="progress-bar-bg"><div class="progress-fill" style="width: 80%;"></div></div></div>
+            <div class="tags"><span class="tag">目标：五一后考e1</span><span class="tag">六月内考e2</span></div>
+        </div>
+    </div>
+
+    <!-- 遇到的问题及解决方法 -->
     <div class="card">
-        <div class="card-title">
-            <i class="fas fa-graduation-cap"></i>
-            <span>学习进度</span>
-        </div>
-        <div class="progress-item" id="platformProgress">
-            <div class="progress-label">
-                <span>平台熟悉程度 (以 e1, e2 级别为标准)</span>
-                <span>90%</span>
+        <div class="card-title"><i class="fas fa-bug"></i> 问题与解决路径</div>
+        <div class="two-columns" style="margin-bottom: 0; gap: 1rem;">
+            <div>
+                <div class="list-item"><div class="list-icon"><i class="fas fa-question-circle"></i></div><div class="list-content"><div class="list-title">考什么？操作范围？</div><div class="list-desc">找焦雪松要集训PPT → 发现数据基座群二维码 → 进群获取知识库</div></div></div>
+                <div class="list-item"><div class="list-icon"><i class="fas fa-code-branch"></i></div><div class="list-content"><div class="list-title">字段取值/映射判断</div><div class="list-desc">请教泽哥、亚哥指导</div></div></div>
+                <div class="list-item"><div class="list-icon"><i class="fas fa-server"></i></div><div class="list-content"><div class="list-title">数据基座测试环境崩溃</div><div class="list-desc">持续沟通焦雪松 → 最终获得新环境</div></div></div>
             </div>
-            <div class="progress-bar-bg"><div class="progress-fill" style="width: 90%;"></div></div>
-        </div>
-        <div class="progress-item" id="generalSkill">
-            <div class="progress-label">
-                <span>通识类技能</span>
-                <span>80%</span>
+            <div>
+                <div class="list-item"><div class="list-icon"><i class="fas fa-upload"></i></div><div class="list-content"><div class="list-title">服务器更新jar包</div><div class="list-desc">泽哥共享桌面演示 + 亚哥提供操作文档</div></div></div>
+                <div class="list-item"><div class="list-icon"><i class="fas fa-handshake"></i></div><div class="list-content"><div class="list-title">校方沟通技巧</div><div class="list-desc">确认老师/职责 → 创建西安石油通讯录 → AI润色措辞</div></div></div>
+                <div class="list-item"><div class="list-icon"><i class="fas fa-robot"></i></div><div class="list-content"><div class="list-title">其它辅助</div><div class="list-desc">查知识库 / 请教项目经理 / 小助手 / AI</div></div></div>
             </div>
-            <div class="progress-bar-bg"><div class="progress-fill" style="width: 80%;"></div></div>
         </div>
-        <div class="item-list" style="margin-top: 1rem;">
-            <div class="list-item">
-                <div class="list-icon"><i class="fas fa-file-signature"></i></div>
-                <div class="list-content">
-                    <div class="list-title">公司投标全流程</div>
-                    <div class="list-desc">已了解公司投标全流程</div>
+    </div>
+
+    <!-- 下个月计划 + 希望得到帮助（分行清晰） -->
+    <div class="two-columns">
+        <div class="card">
+            <div class="card-title"><i class="fas fa-calendar-week"></i> 下个月计划（5月）</div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-user-graduate"></i></div><div class="list-content"><div class="list-title">模型转换扩展</div><div class="list-desc">学生基本信息、学生课程信息、留学生信息 + 统计字段数据情况</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-comments"></i></div><div class="list-content"><div class="list-title">校方数据沟通</div><div class="list-desc">贴源层缺失的表 → 推动校方推送数据</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-exchange-alt"></i></div><div class="list-content"><div class="list-title">剩余模型转换+人事推送</div><div class="list-desc">完成剩余表映射，记录字段问题，推送人事数据</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-certificate"></i></div><div class="list-content"><div class="list-title">能力考核</div><div class="list-desc">五一后尝试 e1 考核，六月内完成 e2 考核</div></div></div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-handshake"></i> 希望得到的帮助</div>
+            <div class="question-list">
+                <div class="question-item">
+                    <div class="question-text"><i class="fas fa-question-circle"></i> e1/e2 考核是考察广泛描述，还是聚焦平台操作步骤？</div>
+                </div>
+                <div class="question-item">
+                    <div class="question-text"><i class="fas fa-question-circle"></i> 是否会出“拉链表与普通表区别”这类八股文？</div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="footer-note">
-        2026年4月 · 科研数据检验 | 西安理工大学投标 | ETL 任务
+        日报 · IDEA SQL记录 · 沟通留痕 · 脚本产出 · 全程可追溯
     </div>
 </div>
-
-<!-- 模态框 - 用于显示字段列表 -->
-<div id="fieldModal" class="modal-overlay">
-    <div class="modal-container">
-        <h3><i class="fas fa-database"></i> 科研数据字段详情 (145个字段)</h3>
-        <div class="field-list" id="fieldList"></div>
-        <div class="close-modal" onclick="closeModal()">关闭</div>
-    </div>
-</div>
-
-<!-- 内容弹窗 - 用于显示详细技能/知识内容 -->
-<div id="contentModal" class="alert-modal">
-    <div class="alert-card">
-        <h3 id="contentModalTitle"><i class="fas fa-code"></i> 详细信息</h3>
-        <div id="contentModalBody" class="alert-content"></div>
-        <button onclick="closeContentModal()">关闭</button>
-    </div>
-</div>
-
-<script>
-    // 字段数据（按表分组，不重复显示表名）
-    const fieldGroups = [
-        {
-            table: "dwd_kxyj_教职工参与科研项目",
-            fields: [
-                "教职工号", "项目名称", "项目类别", "项目类型名称", "项目类型代码",
-                "项目编号", "科技项目类别名称", "科技项目类别代码", "项目级别名称",
-                "项目级别代码", "项目来源单位", "项目来源名称", "项目来源代码",
-                "项目执行状态名称", "项目执行状态代码", "贡献率", "署名顺序",
-                "参与日期", "参与状态", "是否项目负责人", "立项日期", "结项日期", "项目经费总额"
-            ]
-        },
-        {
-            table: "dwd_kxyj_教职工发表论文",
-            fields: [
-                "教职工号", "论文编号", "论文名称", "论文类型名称", "论文类型代码",
-                "收录类别名称", "收录类别代码", "学校署名名称", "学校署名代码",
-                "论文发表类型名称", "论文发表类型代码", "刊物级别名称", "刊物级别代码",
-                "刊物名称", "发表日期", "署名顺序", "贡献率", "是否通讯作者名称",
-                "是否通讯作者代码", "是否第一作者名称", "是否第一作者代码", "SCI", "ESI"
-            ]
-        },
-        {
-            table: "dwd_kxyj_教职工发明专利",
-            fields: [
-                "教职工号", "专利编号", "专利名称", "专利类型名称", "专利类型代码",
-                "专利状态名称", "专利状态代码", "专利授权公告号", "专利授权公告日期",
-                "是否本校专利名称", "是否本校专利代码", "是否PCT专利名称", "是否PCT专利代码",
-                "专利国家名称", "专利国家代码", "贡献率", "发明人排名", "是否本校第一发明人"
-            ]
-        },
-        {
-            table: "dwd_kxyj_教职工出版著作",
-            fields: [
-                "教职工号", "著作编号", "著作名称", "出版社名称", "出版社级别名称",
-                "出版社级别代码", "出版社所在国家地区", "出版日期", "论著类别名称",
-                "论著类别代码", "学校署名名称", "学校署名代码", "署名顺序", "贡献率",
-                "是否第一作者名称", "是否第一作者代码", "是否本校第一作者名称", "是否本校第一作者代码"
-            ]
-        },
-        {
-            table: "dwd_kxyj_教职工发表计算机软件著作权",
-            fields: [
-                "教职工号", "软件著作名称", "证书号", "登记号", "著作权人", "署名顺序",
-                "首次发表日期", "证书取得日期", "证书颁发机构", "权利取得方式名称", "权利取得方式代码"
-            ]
-        },
-        {
-            table: "dwd_kxyj_教职工科研获奖",
-            fields: [
-                "教职工号", "获奖成果类型名称", "获奖成果类型代码", "获奖成果编号", "获奖成果名称",
-                "奖励名称", "获奖类别名称", "获奖类别代码", "获奖级别名称", "获奖级别代码",
-                "获奖等级名称", "获奖等级代码", "获奖日期", "获奖金额", "单位排名", "署名顺序"
-            ]
-        }
-    ];
-
-    // 渲染字段列表到模态框
-    function renderFieldList() {
-        const container = document.getElementById('fieldList');
-        if (!container) return;
-        container.innerHTML = '';
-        fieldGroups.forEach(group => {
-            const groupDiv = document.createElement('div');
-            groupDiv.className = 'field-group';
-            groupDiv.innerHTML = `<div class="table-name">📁 ${group.table}</div>`;
-            group.fields.forEach(field => {
-                const fieldDiv = document.createElement('div');
-                fieldDiv.className = 'field-item';
-                fieldDiv.innerHTML = `<i class="fas fa-caret-right" style="font-size: 0.6rem; margin-right: 0.4rem; color:#8aa2ff;"></i> ${field}`;
-                groupDiv.appendChild(fieldDiv);
-            });
-            container.appendChild(groupDiv);
-        });
-    }
-
-    // 字段列表模态框
-    const fieldModal = document.getElementById('fieldModal');
-    function openModal() {
-        renderFieldList();
-        fieldModal.classList.add('active');
-    }
-    function closeModal() {
-        fieldModal.classList.remove('active');
-    }
-    window.closeModal = closeModal;
-    fieldModal.addEventListener('click', (e) => {
-        if (e.target === fieldModal) closeModal();
-    });
-
-    // 内容弹窗
-    const contentModal = document.getElementById('contentModal');
-    const contentModalTitle = document.getElementById('contentModalTitle');
-    const contentModalBody = document.getElementById('contentModalBody');
-    
-    function openContentModal(title, htmlContent) {
-        contentModalTitle.innerHTML = title;
-        contentModalBody.innerHTML = htmlContent;
-        contentModal.classList.add('active');
-    }
-    
-    function closeContentModal() {
-        contentModal.classList.remove('active');
-    }
-    window.closeContentModal = closeContentModal;
-    contentModal.addEventListener('click', (e) => {
-        if (e.target === contentModal) closeContentModal();
-    });
-
-    // 平台熟悉程度详细内容
-    const platformContent = `
-        <h4>📝 一、笔试部分</h4>
-        <ul>
-            <li>掌握关系型数据库的概念、原理</li>
-            <li>掌握关系型数据库和非关系型数据库的区别</li>
-            <li>了解数据基座产品解决方案</li>
-            <li>掌握数据仓库业务概念、元数据业务概念、数据标准业务概念、数据资源目录业务概念</li>
-        </ul>
-        <h4>🔧 二、实操部分</h4>
-        <ul>
-            <li>掌握Oracle、MySQL、SqlServer、PG、greenplum等数据库配置连接操作</li>
-            <li>掌握数据基座初始化配置操作（包含组织机构同步人员、用户同步、权限配置、认证集成、LOGO配置、系统安全、CASP集成、消息配置等内容）</li>
-            <li>掌握数据源配置（包含应用管理与数据源配置）</li>
-            <li>掌握数据定时入湖配置（包含普通数据、时序数据、行业集成库使用、表结构更新、采集任务监控、配置管理等）</li>
-            <li>掌握greenplum数据库的调优、日志定位、备份恢复等</li>
-            <li>掌握元数据配置（包含数据仓库、来源库、任务、仪表板的元数据）</li>
-            <li>掌握补采工具使用</li>
-            <li>掌握标准层实施（包含云端标准模型初始化<模型下载、自定义模型>、任务配置、计算字段、子转换、代码映射<贴源表>、脏数据过滤<贴源表>、清洗转换任务）</li>
-            <li>掌握共享交换中的业务数据实施（包含视图创建、新增表、参照现有表新增）</li>
-            <li>掌握数据共享交换实施（包含任务配置、计算字段、子转换 、sql编辑器、调度计划）</li>
-            <li>掌握数据标准实施（包含代码标准、数据元素标准，编码规范，标准发布、配置管理<标准发布部门名称、标准发布学校代号>、数据门户的标准与规范）</li>
-            <li>掌握数据资源编目实施方法（包含数据资源目录、api调用域名地址）</li>
-            <li>掌握数据资源共享实施方法（包含数据资源共享与数据门户实施）</li>
-            <li>掌握老数据平台迁移能力（包含希嘉API迁移、数据V5平台迁移与ODI-ETL迁移）</li>
-            <li>具备可视化大屏主题分析实施能力（包含调研）</li>
-            <li>掌握高职上报工具实施能力</li>
-            <li>能基于odi的etl接口进行接口迁移的工作</li>
-        </ul>
-    `;
-
-    // 通识类技能详细内容
-    const generalSkillContent = `
-        <ul>
-            <li>具备linux操作系统基础理论与实操能力</li>
-            <li>具备oracle、SQL语句基础理论与实操能力</li>
-            <li>具备docker、tomcat、weblogic基础理论与实操能力</li>
-        </ul>
-        <h4>🛠️ 工具使用</h4>
-        <ul>
-            <li>xshell等服务器远程连接工具使用</li>
-            <li>PLSQL等数据库远程连接工具使用</li>
-        </ul>
-        <h4>💻 LINUX基础命令</h4>
-        <ul>
-            <li>会使用命令创建文件夹/文件</li>
-            <li>会使用vim对文件操作</li>
-            <li>会使用查找命令</li>
-            <li>会使用拷贝和移动命令</li>
-            <li>会使用常用的网络排查命令，如telnet、netstat、ping等</li>
-            <li>会使用压缩解压缩命令对程序进行备份</li>
-            <li>会使用远程复制命令scp</li>
-            <li>会使用命令查询服务器的基本信息，如top、free、ps等</li>
-            <li>会使用命令对文件的权限进行修改</li>
-        </ul>
-        <h4>🐳 容器与中间件</h4>
-        <ul>
-            <li>会实操docker、tomcat、weblogic（包含安装、启停等）</li>
-        </ul>
-        <h4>🔐 安全与日志</h4>
-        <ul>
-            <li>熟悉堡垒机的使用方法</li>
-            <li>能够在oracle数据库中通过SQL语句进行增删改查等操作</li>
-            <li>能够分析查看操作系统与业务系统各项日志文件</li>
-        </ul>
-    `;
-
-    // 卡片点击事件
-    document.getElementById('fieldsCard').addEventListener('click', () => {
-        openModal();
-    });
-
-    document.getElementById('problemCard').addEventListener('click', () => {
-        window.open('https://alidocs.dingtalk.com/i/nodes/gwva2dxOW4KpQ63lUBG4YRnm8bkz3BRL', '_blank');
-    });
-
-    document.getElementById('sqlCard').addEventListener('click', () => {
-        const alertModal = document.createElement('div');
-        alertModal.className = 'alert-modal';
-        alertModal.innerHTML = `
-            <div class="alert-card" style="max-width: 400px;">
-                <i class="fas fa-info-circle" style="font-size: 2rem; color: #8aa2ff; display: block; text-align: center; margin-bottom: 1rem;"></i>
-                <p style="color: #eef3ff; text-align: center; font-size: 1rem;">请在 IDEA 第317行查看相关内容</p>
-                <button onclick="this.closest('.alert-modal').remove()" style="display: block; margin: 1rem auto 0;">知道了</button>
-            </div>
-        `;
-        document.body.appendChild(alertModal);
-        setTimeout(() => alertModal.classList.add('active'), 10);
-        alertModal.addEventListener('click', (e) => {
-            if (e.target === alertModal) alertModal.remove();
-        });
-    });
-
-    document.getElementById('pythonCard').addEventListener('click', () => {
-        const alertModal = document.createElement('div');
-        alertModal.className = 'alert-modal';
-        alertModal.innerHTML = `
-            <div class="alert-card" style="max-width: 500px;">
-                <i class="fas fa-file-code" style="font-size: 2rem; color: #8aa2ff; display: block; text-align: center; margin-bottom: 1rem;"></i>
-                <p style="color: #eef3ff; text-align: center; font-size: 0.9rem; word-break: break-all;">文件路径存在于：<br>/Users/apple/Desktop/00ceshi/1python/XiAnShiYouZiDuan.py</p>
-                <button onclick="this.closest('.alert-modal').remove()" style="display: block; margin: 1rem auto 0;">知道了</button>
-            </div>
-        `;
-        document.body.appendChild(alertModal);
-        setTimeout(() => alertModal.classList.add('active'), 10);
-        alertModal.addEventListener('click', (e) => {
-            if (e.target === alertModal) alertModal.remove();
-        });
-    });
-
-    document.getElementById('platformProgress').addEventListener('click', () => {
-        openContentModal('<i class="fas fa-cloud-upload-alt"></i> 平台熟悉程度 (e1/e2级别标准)', platformContent);
-    });
-
-    document.getElementById('generalSkill').addEventListener('click', () => {
-        openContentModal('<i class="fas fa-brain"></i> 通识类技能详情', generalSkillContent);
-    });
-</script>
 </body>
 </html>
