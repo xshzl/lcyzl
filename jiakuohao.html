@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>数据库表名格式转换工具 | 表名(注释) 格式转换</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0f4f8;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        /* 主卡片 */
+        .converter-card {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        /* 头部 */
+        .header {
+            background: linear-gradient(135deg, #1A3C5C 0%, #2B5A7A 100%);
+            padding: 28px 32px;
+            color: white;
+        }
+
+        .header h1 {
+            margin: 0 0 8px 0;
+            font-weight: 600;
+            font-size: 1.8rem;
+            letter-spacing: -0.3px;
+        }
+
+        .header p {
+            margin: 0;
+            opacity: 0.85;
+            font-size: 0.95rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            border-radius: 40px;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            margin-top: 12px;
+        }
+
+        /* 主要内容区 */
+        .main-content {
+            padding: 28px 32px 32px;
+        }
+
+        /* 输入区与输出区双栏布局 (大屏并排) */
+        .panels {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            margin-bottom: 28px;
+        }
+
+        .panel {
+            flex: 1;
+            min-width: 260px;
+            background: #fefefe;
+            border-radius: 24px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e9edf2;
+            transition: box-shadow 0.2s;
+        }
+
+        .panel:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 16px 20px 8px 20px;
+            border-bottom: 1px solid #eef2f6;
+            flex-wrap: wrap;
+        }
+
+        .panel-header h3 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #1e2f3e;
+        }
+
+        .counter {
+            font-size: 0.75rem;
+            background: #eff3f6;
+            padding: 4px 10px;
+            border-radius: 30px;
+            color: #2c5a7a;
+            font-family: monospace;
+        }
+
+        .textarea-container {
+            padding: 16px 20px 20px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 280px;
+            border: 1px solid #cfdee9;
+            border-radius: 20px;
+            padding: 14px 18px;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            resize: vertical;
+            background: #fdfdfd;
+            transition: 0.2s;
+            outline: none;
+            color: #1f2d3a;
+        }
+
+        textarea:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+        }
+
+        /* 操作按钮区 */
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin: 8px 0 28px 0;
+        }
+
+        button {
+            background: white;
+            border: 1px solid #cbdde9;
+            padding: 10px 20px;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #1f3b4c;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+
+        button i {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background: #1e5a7d;
+            border-color: #1e5a7d;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .btn-primary:hover {
+            background: #0f4462;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            border-color: #bdcbd8;
+            background: #f9fcff;
+        }
+
+        .btn-outline:hover {
+            background: #eef3fc;
+            border-color: #8aaec2;
+        }
+
+        .btn-clear {
+            background: #fef5f0;
+            border-color: #f3cfb5;
+            color: #b45a2b;
+        }
+
+        .btn-clear:hover {
+            background: #fde8de;
+        }
+
+        /* 提示和示例区 */
+        .info-section {
+            background: #f8fafd;
+            border-radius: 20px;
+            padding: 16px 22px;
+            border: 1px solid #e2edf5;
+            font-size: 0.85rem;
+        }
+
+        .info-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1e4663;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .example-box {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 12px 16px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            border: 1px solid #e2e8f0;
+            color: #1f3b4c;
+            margin: 10px 0 0;
+            word-break: break-all;
+        }
+
+        .rule-desc {
+            margin: 10px 0 0 0;
+            color: #3a6b8c;
+        }
+
+        hr {
+            margin: 16px 0;
+            border: none;
+            border-top: 1px solid #e6edf2;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #7c8f9e;
+            border-top: 1px solid #eef2f8;
+            padding: 18px 32px 20px;
+            background: #fbfdfe;
+        }
+
+        @media (max-width: 760px) {
+            .main-content {
+                padding: 20px;
+            }
+            .panel-header h3 {
+                font-size: 1rem;
+            }
+            textarea {
+                min-height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="converter-card">
+    <div class="header">
+        <h1>📄 表名注释规范化工具</h1>
+        <p>将「表名 + 中文注释」转换为「表名(中文注释)」标准格式</p>
+        <div class="badge">✨ 支持批量识别 · 智能解析</div>
+    </div>
+
+    <div class="main-content">
+        <!-- 双栏编辑区 -->
+        <div class="panels">
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>📥 原始输入</h3>
+                    <span class="counter" id="inputCounter">0 行</span>
+                </div>
+                <div class="textarea-container">
+                    <textarea id="inputTextArea" placeholder="每行一条记录，支持混合格式：
+ods_newrs_view_emp09各类人才
+dm1_rcchlb人才称号类别
+dm1_rcch人才称号
+或已经是标准格式：ods_newrs_view_emp09(各类人才)
+也支持多个空格/无空格分隔 ...
+"></textarea>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>📎 转换结果</h3>
+                    <span class="counter" id="outputCounter">0 行</span>
+                </div>
+                <div class="textarea-container">
+                    <textarea id="outputTextArea" readonly placeholder="转换后格式：英文表名(中文注释)&#10;例如：ods_newrs_view_emp09(各类人才)"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 操作按钮组 -->
+        <div class="action-bar">
+            <button id="convertBtn" class="btn-primary">
+                <i>🔄</i> 一键转换
+            </button>
+            <button id="copyBtn" class="btn-outline">
+                <i>📋</i> 复制结果
+            </button>
+            <button id="clearBtn" class="btn-clear">
+                <i>🗑️</i> 清空所有
+            </button>
+            <button id="sampleBtn" class="btn-outline">
+                <i>📋</i> 载入示例
+            </button>
+        </div>
+
+        <!-- 规则说明与示例 -->
+        <div class="info-section">
+            <div class="info-title">
+                <span>📖</span> 转换规则说明
+            </div>
+            <div>识别以下三种常见原始格式，统一输出为 <strong>表名(中文注释)</strong> ：</div>
+            <div class="example-box">
+                ➤ 原始格式1（直接拼接）：<code>ods_newrs_view_emp09各类人才</code><br>
+                ➤ 原始格式2（带括号但需规范）：<code>dm1_rcchlb(人才称号类别)</code> 保持原样<br>
+                ➤ 原始格式3（空格分隔）：<code>dm1_rcch 人才称号</code> → 自动合并为 <code>dm1_rcch(人才称号)</code><br>
+                <hr>
+                🎯 <strong>目标示例：</strong><br>
+                <code>ods_newrs_view_emp09各类人才</code> → <code>ods_newrs_view_emp09(各类人才)</code><br>
+                <code>dm1_rcchlb人才称号类别</code> → <code>dm1_rcchlb(人才称号类别)</code><br>
+                <code>dm1_rcch 人才称号</code> → <code>dm1_rcch(人才称号)</code><br>
+                ✅ 保留原始英文表名部分，自动提取中文注释并置于括号内。
+            </div>
+            <div class="rule-desc">
+                💡 提示：支持批量行处理，每一行独立转换。智能识别“表名+注释”边界 (基于中文字符或已知括号拆分)。若行已是标准格式则直接保留。注释不会丢失。
+            </div>
+        </div>
+    </div>
+    <footer>
+        🛠️ 适用于数据仓库建模 | 将 ods_newrs_view_emp09各类人才 / dm1_rcchlb人才称号类别 / dm1_rcch人才称号 规范为 "表名(注释)"
+    </footer>
+</div>
+
+<script>
+    (function(){
+        // DOM 元素引用
+        const inputTextarea = document.getElementById('inputTextArea');
+        const outputTextarea = document.getElementById('outputTextArea');
+        const convertBtn = document.getElementById('convertBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const sampleBtn = document.getElementById('sampleBtn');
+        const inputCounter = document.getElementById('inputCounter');
+        const outputCounter = document.getElementById('outputCounter');
+
+        /**
+         * 核心转换函数：将单行原始字符串转换为 "表名(中文注释)" 格式
+         * 处理逻辑（按顺序优先级匹配，确保鲁棒性）：
+         * 1. 如果已经是标准格式  表名(注释) 且括号内含有中文或至少一个非空字符，并且表名部分不包含括号，则直接返回。
+         * 2. 如果行内存在中文字符，尝试定位中文字符开始位置，分离英文表名部分 + 中文注释部分。
+         * 3. 特殊处理空格分隔：如果存在空格，空格前视为表名，空格后（去除首尾空白）作为注释。
+         * 4. 如果存在括号但没有完全符合标准，例如 "dm1_rcch(人才称号" 缺少闭合，则智能修复。
+         * 5. 兜底：如果无法识别注释，则原样返回并在注释区域提示？根据需求保持原始但尽量提取。
+         * 
+         * 基于真实需求：主要针对 "英文(或数字下划线)紧跟中文注释" 且没有括号的场景。
+         * 优先处理连续英文/数字/下划线作为表名 + 剩余中文字符串作为注释。
+         */
+        function convertLineToStandard(line) {
+            if (!line || line.trim() === "") {
+                return ""; // 空行返回空字符串，最终保留空行结构
+            }
+
+            let trimmedLine = line.trim();
+            if (trimmedLine === "") return "";
+
+            // 情况0: 已经是标准 "表名(中文注释)" 格式且括号匹配，并且括号内有内容，直接返回 (避免破坏)
+            // 正则匹配: 表名部分不含括号，后面跟着 (xxx) ，要求至少有中文或非空字符
+            const standardPattern = /^([a-zA-Z0-9_]+)\(([^)]+)\)$/;
+            const stdMatch = trimmedLine.match(standardPattern);
+            if (stdMatch) {
+                const tableName = stdMatch[1];
+                let comment = stdMatch[2].trim();
+                if (comment.length > 0) {
+                    // 已经是完美标准，直接返回原行（避免多余修改）
+                    return trimmedLine;
+                } else {
+                    // 如果括号内为空，则应当尝试补救: 忽略这种情况，走下面的重新构建逻辑。
+                    // 但极少见，按照规矩，最好保持表名加空括号不推荐。此处可以尝试重新提取，但通常不用做额外操作。
+                }
+            }
+
+            // 情况1: 先处理含有左括号但右括号缺失或格式混乱的情况，尝试重构标准格式
+            // 例如 "dm1_rcch(人才称号" 缺少闭合，或类似 "dm1_rcch(人才称号)类别" 等。
+            // 如果包含 '(' 但不匹配标准完成，我们可以提取括号前部分为表名候选, 括号内部及后续部分尽可能整合为注释。
+            if (trimmedLine.includes('(') && !trimmedLine.match(standardPattern)) {
+                // 寻找第一个左括号的位置
+                const leftParenIdx = trimmedLine.indexOf('(');
+                const potentialTable = trimmedLine.substring(0, leftParenIdx).trim();
+                // 提取从'('之后的所有字符，并移除最后的可能多余的右括号或不匹配
+                let restPart = trimmedLine.substring(leftParenIdx + 1);
+                // 去除结尾可能多余的 ')' 但保留内容（如果有多个右括号，先去除末尾孤立）)
+                if (restPart.endsWith(')')) {
+                    restPart = restPart.slice(0, -1);
+                }
+                // 清洗后restPart作为注释主体（若非空）
+                let comment = restPart.trim();
+                if (potentialTable.match(/^[a-zA-Z0-9_]+$/) && comment.length > 0) {
+                    return `${potentialTable}(${comment})`;
+                } else {
+                    // 表名不符合规范或者注释为空，降级走通用逻辑
+                }
+            }
+
+            // 情况2: 存在空格分隔（形如 "dm1_rcch 人才称号"、"ods_newrs_view_emp09 各类人才"）。
+            // 优先按空格切成两块，前块应该是英文数字下划线表名，后块完整作为中文注释（不包含英文）。
+            const spaceSplit = trimmedLine.split(/\s+/);
+            if (spaceSplit.length >= 2) {
+                const firstPart = spaceSplit[0];
+                // 后一部分合并（若多个空格分隔的单词可能是注释含空格？注释一般无空格但保险）
+                const restComment = spaceSplit.slice(1).join(' ').trim();
+                // 检查第一部分是否为合法表名字符（字母数字下划线）
+                if (/^[a-zA-Z0-9_]+$/.test(firstPart) && restComment.length > 0) {
+                    return `${firstPart}(${restComment})`;
+                }
+                // 如果第一部分不符合表名规则，但可能前边是表名后边是注释但我们还是继续后续逻辑。
+            }
+
+            // 情况3: 核心场景: 英文+数字+下划线表名后直接连接中文字符（无任何分隔符、无括号）：典型 "ods_newrs_view_emp09各类人才"
+            // 通过扫描字符串确定第一个中文字符（或中文标点、Unicode 4E00-9FFF范围）的位置，将之前部分作为表名，之后作为注释。
+            const chineseRegex = /[\u4e00-\u9fa5]/;
+            const matchChinese = trimmedLine.match(chineseRegex);
+            if (matchChinese) {
+                const chineseIndex = matchChinese.index;
+                // 提取表名部分（0 到 chineseIndex）
+                let possibleTable = trimmedLine.substring(0, chineseIndex);
+                let commentRaw = trimmedLine.substring(chineseIndex);
+                // 去除表名部分尾部可能存在的非法字符（但一般应是字母数字下划线组合，清理空白）
+                possibleTable = possibleTable.trim();
+                commentRaw = commentRaw.trim();
+                // 检查possibleTable是否有效: 只允许字母数字下划线并且不为空
+                if (/^[a-zA-Z0-9_]+$/.test(possibleTable) && commentRaw.length > 0) {
+                    // 额外去除commentRaw中可能包含的残存括号等（例如原始字符带有圆括号但未正确分割）统一清洗，但保留原始注释中文
+                    // 移除注释中开头可能多余的 '(' 或结尾多余的 ')'
+                    let cleanedComment = commentRaw;
+                    if (cleanedComment.startsWith('(')) cleanedComment = cleanedComment.substring(1);
+                    if (cleanedComment.endsWith(')')) cleanedComment = cleanedComment.slice(0, -1);
+                    // 确保注释不为空
+                    if (cleanedComment.length === 0) cleanedComment = commentRaw; // fallback
+                    return `${possibleTable}(${cleanedComment})`;
+                } else {
+                    // 表名不规范但可能因为注释中也包含英文字母，我们尝试更复杂的启发：从起始位置捕获连续字母数字下划线直到遇到非字母数字下划线
+                    const tableMatch = trimmedLine.match(/^[a-zA-Z0-9_]+/);
+                    if (tableMatch && tableMatch[0].length > 0) {
+                        const tableName = tableMatch[0];
+                        const restAfterTable = trimmedLine.substring(tableName.length);
+                        if (restAfterTable.length > 0) {
+                            let restClean = restAfterTable.trim();
+                            if (restClean.startsWith('(')) restClean = restClean.substring(1);
+                            if (restClean.endsWith(')')) restClean = restClean.slice(0, -1);
+                            if (restClean.length > 0) {
+                                return `${tableName}(${restClean})`;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 情况4: 使用另一种规则：如果整行最初没有括号但没有中文字符? 但任务要求转换各类人才场景基本都含中文。极少数不含中文保留原样？
+            // 如果既没有中文字符也没有空格分割，直接保持原文本 (可能是纯表名无注释, 或者注释缺失)
+            if (!chineseRegex.test(trimmedLine) && !trimmedLine.includes('(')) {
+                // 无中文无括号无法转换，原样返回
+                return trimmedLine;
+            }
+
+            // 情况5: 兜底尝试最后一种智能：对于形如 [a-zA-Z0-9_]后跟任意可能括号混合，用正则捕获前部分作为表名，剩余直到末尾作为注释。
+            const fallbackRegex = /^([a-zA-Z0-9_]+)(.*)$/;
+            const fbMatch = trimmedLine.match(fallbackRegex);
+            if (fbMatch && fbMatch[1] && fbMatch[2]) {
+                let tablePart = fbMatch[1];
+                let extra = fbMatch[2].trim();
+                if (extra.length > 0) {
+                    // 去除额外的括号和特殊字符
+                    let cleanedExtra = extra.replace(/^\(/, '').replace(/\)$/, '');
+                    if (cleanedExtra.length > 0) {
+                        return `${tablePart}(${cleanedExtra})`;
+                    } else {
+                        // 如果清理后为空，返回表名加空括号（保持统一）
+                        return `${tablePart}()`;
+                    }
+                } else {
+                    return trimmedLine;
+                }
+            }
+
+            // 最后保留原始输入，不改变
+            return trimmedLine;
+        }
+
+        /**
+         * 批量处理输入文本域的所有行，保留空行结构
+         */
+        function convertAllLines() {
+            const rawText = inputTextarea.value;
+            const lines = rawText.split(/\r?\n/);
+            const convertedLines = lines.map(line => {
+                // 保留原始空行，但转换非空行
+                if (line.trim() === "") {
+                    return ""; // 空行直接保留空行
+                }
+                return convertLineToStandard(line);
+            });
+            const outputText = convertedLines.join('\n');
+            outputTextarea.value = outputText;
+            updateCounters();
+        }
+
+        // 更新输入/输出行数统计（非空行计数，体现有效数据）
+        function updateCounters() {
+            const inputLines = inputTextarea.value.split(/\r?\n/).filter(l => l.trim().length > 0).length;
+            const outputLines = outputTextarea.value.split(/\r?\n/).filter(l => l.trim().length > 0).length;
+            inputCounter.innerText = `${inputLines} 行`;
+            outputCounter.innerText = `${outputLines} 行`;
+        }
+
+        // 复制结果到剪贴板
+        async function copyToClipboard() {
+            const result = outputTextarea.value;
+            if (!result || result.trim() === "") {
+                // 轻提示风格
+                showToast("没有可复制的内容，请先转换", "info");
+                return;
+            }
+            try {
+                await navigator.clipboard.writeText(result);
+                showToast("✅ 已复制转换结果到剪贴板", "success");
+            } catch (err) {
+                console.error("复制失败:", err);
+                // 旧式降级
+                outputTextarea.select();
+                document.execCommand('copy');
+                showToast("📋 已复制（传统方式）", "success");
+            }
+        }
+
+        // 清空输入输出及重置计数
+        function clearAll() {
+            inputTextarea.value = "";
+            outputTextarea.value = "";
+            updateCounters();
+            showToast("🧹 已清空所有内容", "info");
+        }
+
+        // 载入预设的示例数据（完全按照题目要求: 各类人才，人才称号类别，人才称号以及额外测试）
+        function loadSample() {
+            const sampleText = `ods_newrs_view_emp09各类人才
+dm1_rcchlb人才称号类别
+dm1_rcch人才称号
+ods_newrs_view_emp09(各类人才)    // 已规范演示不变
+dm1_rcchlb 人才称号类别   (空格分隔示例)
+dm1_rcch    人才称号
+dm1_rcchlb(人才称号类别)   // 正确格式
+测试边缘情况prefixTable科研人员
+ods_user_info张三
+已规范表名(额外注释)`;
+            inputTextarea.value = sampleText;
+            // 自动转换使结果立即显示 (提升体验)
+            convertAllLines();
+            showToast("📂 示例已加载，并自动完成转换", "success");
+        }
+
+        // 简易toast提示（临时弹层）
+        function showToast(message, type = "info") {
+            // 创建临时toast元素并移除
+            const toast = document.createElement('div');
+            toast.innerText = message;
+            toast.style.position = 'fixed';
+            toast.style.bottom = '30px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = type === 'success' ? '#1f5e3a' : '#2c5a7a';
+            toast.style.color = 'white';
+            toast.style.padding = '10px 20px';
+            toast.style.borderRadius = '40px';
+            toast.style.fontSize = '0.85rem';
+            toast.style.fontWeight = '500';
+            toast.style.boxShadow = '0 6px 14px rgba(0,0,0,0.15)';
+            toast.style.zIndex = '9999';
+            toast.style.fontFamily = 'inherit';
+            toast.style.backdropFilter = 'blur(4px)';
+            toast.style.whiteSpace = 'nowrap';
+            if (type === 'info') toast.style.backgroundColor = '#2c3e50';
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.2s';
+                setTimeout(() => toast.remove(), 300);
+            }, 1800);
+        }
+
+        // 监听输入框变化时实时更新输入行数统计，但转换需要手动触发（保持用户预期）
+        function bindEvents() {
+            inputTextarea.addEventListener('input', () => {
+                updateCounters();
+            });
+            convertBtn.addEventListener('click', () => {
+                convertAllLines();
+                showToast("✨ 转换完成", "success");
+            });
+            copyBtn.addEventListener('click', copyToClipboard);
+            clearBtn.addEventListener('click', clearAll);
+            sampleBtn.addEventListener('click', loadSample);
+        }
+
+        // 初始化时加载简单的缺省友好提示内容，不清空但是预置一些引导（非强制）
+        function initDefaultPlaceholder() {
+            if (inputTextarea.value.trim() === "") {
+                // 给一个引导但未真正填充示例，避免覆盖用户操作，只是placeholder提示
+                inputTextarea.placeholder = "每行输入原始字符串，例如：\nods_newrs_view_emp09各类人才\ndm1_rcchlb人才称号类别\ndm1_rcch人才称号\n点击「载入示例」快速体验";
+            }
+            updateCounters();
+        }
+
+        bindEvents();
+        initDefaultPlaceholder();
+        // 首次不做自动转换，防止空白转换输出混乱，但用户可以点击转换。为了展示友好，若输入为空则不自动
+        // 但为了初始示例不自动执行，但是载入示例会自动转换。
+    })();
+</script>
+</body>
+</html>
