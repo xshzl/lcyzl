@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>个人月度汇报 · 许仕浩 | 2026年5月</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #05070a;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+            background-image: radial-gradient(rgba(80, 100, 160, 0.04) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* 移除了所有动画 (body::before 和 keyframes 已删除) */
+        body::before {
+            display: none;
+        }
+
+        .report-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(20, 25, 45, 0.6);
+            backdrop-filter: blur(12px);
+            padding: 0.6rem 1.3rem;
+            border-radius: 40px;
+            border: 1px solid rgba(100, 130, 240, 0.3);
+            color: #c0ceff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: none; /* 移除过渡动画 */
+        }
+        .back-home:hover {
+            background: rgba(55, 70, 120, 0.8);
+            border-color: rgba(150, 180, 255, 0.6);
+            transform: none; /* 移除位移 */
+            color: white;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .date-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #3a4c8c, #5f7bc0);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: white;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #b0c4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .page-header .sub {
+            color: #7e8fbb;
+            margin-top: 0.3rem;
+            font-size: 0.85rem;
+        }
+
+        .card {
+            background: rgba(12, 15, 22, 0.55);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: none; /* 移除所有过渡动画 */
+        }
+        .card:hover {
+            background: rgba(18, 22, 32, 0.7);
+            border-color: rgba(100, 130, 240, 0.2);
+            box-shadow: none; /* 移除阴影动画 */
+        }
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #eef3ff;
+            margin-bottom: 1.2rem;
+            border-left: 3px solid #8aa2ff;
+            padding-left: 0.8rem;
+        }
+        .card-title i {
+            color: #8aa2ff;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-grid {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .stat-item {
+            flex: 1;
+            background: rgba(25, 30, 48, 0.3);
+            border-radius: 1rem;
+            padding: 0.8rem;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #8aa2ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .stat-label {
+            font-size: 0.65rem;
+            color: #9aa9ce;
+            margin-top: 0.2rem;
+        }
+
+        .progress-item {
+            margin-bottom: 0.8rem;
+        }
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            margin-bottom: 0.3rem;
+            color: #c0ceff;
+        }
+        .progress-bar-bg {
+            height: 5px;
+            background: rgba(40, 45, 65, 0.8);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 6px;
+            background: linear-gradient(90deg, #5f7bc0, #8aa2ff);
+            width: 0%;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            background: rgba(25, 30, 48, 0.25);
+            padding: 0.7rem;
+            border-radius: 0.8rem;
+            margin-bottom: 0.6rem;
+        }
+        .list-icon {
+            width: 28px;
+            height: 28px;
+            background: rgba(100, 130, 240, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8aa2ff;
+            font-size: 0.8rem;
+        }
+        .list-content {
+            flex: 1;
+        }
+        .list-title {
+            font-weight: 600;
+            color: #eef3ff;
+            font-size: 0.85rem;
+        }
+        .list-desc {
+            font-size: 0.7rem;
+            color: #9aa9ce;
+        }
+
+        .tag {
+            background: rgba(100, 130, 240, 0.15);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            color: #b8cbff;
+            display: inline-block;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #5f6b8a;
+        }
+
+        hr {
+            border-color: rgba(255,255,255,0.05);
+            margin: 0.8rem 0;
+        }
+
+        /* 数据治理全链路 - 横向卡片流程 */
+        .pipeline-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(25, 30, 48, 0.6);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            min-width: 90px;
+            justify-content: center;
+        }
+        .flow-step.done {
+            background: rgba(95, 188, 122, 0.25);
+            border: 1px solid rgba(95, 188, 122, 0.5);
+        }
+        .flow-step.current {
+            background: rgba(100, 130, 240, 0.3);
+            border: 1px solid #8aa2ff;
+        }
+        .flow-step .step-icon {
+            font-size: 1rem;
+        }
+        .flow-step .step-name {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #eef3ff;
+        }
+        .flow-step.done .step-name { color: #7dce8a; }
+        .flow-step.current .step-name { color: #8aa2ff; }
+        .flow-arrow {
+            color: #6a7a9e;
+            font-size: 0.9rem;
+        }
+        .pipeline-legend {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.65rem;
+        }
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+        }
+        .legend-dot.done { background: #5fbc7a; }
+        .legend-dot.current { background: #8aa2ff; }
+        .legend-dot.pending { background: #4a5a7a; }
+
+        /* 弹窗样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: none; /* 移除弹窗动画 */
+        }
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-container {
+            background: #0f1220;
+            border-radius: 1.5rem;
+            max-width: 550px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 1.5rem;
+            border: 1px solid rgba(100, 130, 240, 0.3);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .modal-header h3 {
+            color: #eef3ff;
+        }
+        .modal-close {
+            background: rgba(100, 130, 240, 0.2);
+            border: none;
+            color: #c0ceff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .modal-close:hover {
+            background: rgba(100, 130, 240, 0.4);
+        }
+
+        /* 新增：工作内容专用卡片高亮微标 */
+        .work-highlight {
+            border-left: 3px solid #f0b37a;
+        }
+        .work-highlight i {
+            color: #f0b37a !important;
+        }
+
+        @media (max-width: 800px) {
+            body { padding: 1rem; }
+            .two-col { grid-template-columns: 1fr; }
+            .pipeline-flow { flex-direction: column; align-items: stretch; }
+            .flow-arrow { transform: rotate(90deg); text-align: center; margin: 0.1rem 0; }
+            .flow-step { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="report-container">
+    <a href="https://xshzl.github.io/lcyzl/" class="back-home">
+        <i class="fas fa-arrow-left"></i> 返回主页
+    </a>
+
+    <div class="page-header">
+        <div class="date-badge">📅 2026年5月 · 个人月度汇报</div>
+        <h1>许仕浩 · 工作与学习总结</h1>
+        <div class="sub">问题处理 · 模型建设 · 接口任务 · 项目进度 · e2考核</div>
+    </div>
+
+    <!-- ========= 新增: 本月重点工作内容（核心板块） ========= -->
+    <div class="card work-highlight">
+        <div class="card-title"><i class="fas fa-clipboard-list"></i> 📌 本月重点专项工作</div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-handshake"></i></div>
+            <div class="list-content">
+                <div class="list-title">西安石油大学专项会议（汇报内容与排版商讨）</div>
+                <div class="list-desc">与甲方郑老师、司新亚经理召开线下会议，重点商讨个人月度汇报的内容框架、数据展示逻辑及汇报排版样式，明确数据维度与汇报规范。</div>
+            </div>
+        </div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-magic"></i></div>
+            <div class="list-content">
+                <div class="list-title">汇报排版调优专项</div>
+                <div class="list-desc">累计投入 7 小时，对月度汇报的整体视觉结构、卡片样式、数据可视化布局进行精细调整，确保报告清晰度与专业性，适配内部审核及校方展示需求。</div>
+            </div>
+        </div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-check-double"></i></div>
+            <div class="list-content">
+                <div class="list-title">汇报内容准确性核对</div>
+                <div class="list-desc">逐项核对模型转换表数量、接口采集脚本清单、两校项目进度及预算数据，保证所有数据与实际工作一致，提升汇报可信度。</div>
+            </div>
+        </div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-chart-simple"></i></div>
+            <div class="list-content">
+                <div class="list-title">全链路数据治理专项跟进</div>
+                <div class="list-desc">重点推进西安石油大学“入主题、入编目”环节，协调数据湖至数据仓库的转换流程，完成主题层模型标准核对。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 数据治理全链路进度 - 横向卡片流程 (无动画) -->
+    <div class="card">
+        <div class="card-title"><i class="fas fa-water"></i> 数据治理全链路进度</div>
+        <div class="pipeline-flow">
+            <div class="flow-step done"><span class="step-icon"><i class="fas fa-database"></i></span><span class="step-name">入湖</span></div>
+            <span class="flow-arrow"><i class="fas fa-arrow-right"></i></span>
+            <div class="flow-step done"><span class="step-icon"><i class="fas fa-warehouse"></i></span><span class="step-name">入仓</span></div>
+            <span class="flow-arrow"><i class="fas fa-arrow-right"></i></span>
+            <div class="flow-step current"><span class="step-icon"><i class="fas fa-layer-group"></i></span><span class="step-name">入主题</span></div>
+            <span class="flow-arrow"><i class="fas fa-arrow-right"></i></span>
+            <div class="flow-step current"><span class="step-icon"><i class="fas fa-book"></i></span><span class="step-name">入编目</span></div>
+            <span class="flow-arrow"><i class="fas fa-arrow-right"></i></span>
+            <div class="flow-step"><span class="step-icon"><i class="fas fa-tags"></i></span><span class="step-name">入标签</span></div>
+            <span class="flow-arrow"><i class="fas fa-arrow-right"></i></span>
+            <div class="flow-step"><span class="step-icon"><i class="fas fa-chart-line"></i></span><span class="step-name">做大屏</span></div>
+            <span class="flow-arrow"><i class="fas fa-arrow-right"></i></span>
+            <div class="flow-step"><span class="step-icon"><i class="fas fa-shield-alt"></i></span><span class="step-name">运维</span></div>
+        </div>
+        <div class="pipeline-legend">
+            <div class="legend-item"><div class="legend-dot done"></div><span style="color:#9aa9ce;">已完成</span></div>
+            <div class="legend-item"><div class="legend-dot current"></div><span style="color:#9aa9ce;">进行中</span></div>
+            <div class="legend-item"><div class="legend-dot pending"></div><span style="color:#9aa9ce;">待开始</span></div>
+        </div>
+        <div class="list-desc" style="text-align: center; margin-top: 0.8rem; color: #8aa2ff;">
+            🎯 当前重点：主题层模型转换 + 数据资源编目
+        </div>
+    </div>
+
+    <!-- ==================== 一、问题处理 ==================== -->
+    <div class="card">
+        <div class="card-title"><i class="fas fa-bug"></i> 一、问题处理 · 西安石油大学</div>
+        <div class="stat-grid">
+            <div class="stat-item"><div class="stat-number">1</div><div class="stat-label">问题报告处理</div></div>
+            <div class="stat-item"><div class="stat-number">1</div><div class="stat-label">校方问题验证轮次</div></div>
+            <div class="stat-item"><div class="stat-number">2</div><div class="stat-label">问题总结+部门清单</div></div>
+        </div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-search"></i></div>
+            <div class="list-content">
+                <div class="list-title">研究生、本科生问题分类处理</div>
+                <div class="list-desc">单独查询并分类研究生/本科生数据问题</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 二、数据模型建设 ==================== -->
+    <div class="card">
+        <div class="card-title"><i class="fas fa-cubes"></i> 二、数据模型建设 · CampusCube</div>
+        <div class="stat-grid">
+            <div class="stat-item"><div class="stat-number">3</div><div class="stat-label">模型转换表</div></div>
+            <div class="stat-item"><div class="stat-number">5</div><div class="stat-label">字典表问题解决</div></div>
+            <div class="stat-item"><div class="stat-number">3</div><div class="stat-label">范例数据填写</div></div>
+        </div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-table"></i></div>
+            <div class="list-content">
+                <div class="list-title">已完成模型转换表</div>
+                <div class="list-desc">学生基本信息 · 来华留学生信息 · 专业管理</div>
+            </div>
+        </div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-language"></i></div>
+            <div class="list-content">
+                <div class="list-title">中文化完善</div>
+                <div class="list-desc">所有已转换表补充中文表名 + 中文字段名</div>
+            </div>
+        </div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-database"></i></div>
+            <div class="list-content">
+                <div class="list-title">字典表问题解决</div>
+                <div class="list-desc">民族、政治面貌、培养层次、学籍状态等5项</div>
+            </div>
+        </div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-chart-simple"></i></div>
+            <div class="list-content">
+                <div class="list-title">范例数据优化</div>
+                <div class="list-desc">3张表填写范例数据 + 优化字典范例数据展示</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 三、接口与采集任务 ==================== -->
+    <div class="card">
+        <div class="card-title"><i class="fas fa-plug"></i> 三、接口与采集任务 · 西安文理学院（麦克斯）</div>
+        <div class="stat-grid">
+            <div class="stat-item"><div class="stat-number">1</div><div class="stat-label">接口文档理解</div></div>
+            <div class="stat-item"><div class="stat-number">17</div><div class="stat-label">Python采集脚本</div></div>
+            <div class="stat-item"><div class="stat-number">17</div><div class="stat-label">接口测试表</div></div>
+        </div>
+    </div>
+
+    <!-- ==================== 四、考核与代码 ==================== -->
+    <div class="card">
+        <div class="card-title"><i class="fas fa-code"></i> 四、考核与代码</div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-graduation-cap"></i></div>
+            <div class="list-content">
+                <div class="list-title">学生课程</div>
+                <div class="list-desc">完成学生课程全部内容</div>
+            </div>
+        </div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-cubes"></i></div>
+            <div class="list-content">
+                <div class="list-title">代码标准模板</div>
+                <div class="list-desc">解决代码标准模板不存在问题</div>
+            </div>
+        </div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-boxes"></i></div>
+            <div class="list-content">
+                <div class="list-title">程序依赖包</div>
+                <div class="list-desc">扩展程序依赖包导入</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 五、项目进度（西安石油 + 西安文理 分开） ==================== -->
+    <div class="two-col">
+        <!-- 西安石油大学 -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-oil-can"></i> 西安石油大学</div>
+            <div class="list-item">
+                <div class="list-icon"><i class="fas fa-user"></i></div>
+                <div class="list-content">
+                    <div class="list-title">甲方负责人 / 项目经理</div>
+                    <div class="list-desc">郑老师 / 司新亚</div>
+                </div>
+            </div>
+            <div class="list-item">
+                <div class="list-icon"><i class="fas fa-calendar"></i></div>
+                <div class="list-content">
+                    <div class="list-title">建设周期</div>
+                    <div class="list-desc">2026-03-18 至 2026-11-10 · 服务期36个月</div>
+                </div>
+            </div>
+            <div class="list-item">
+                <div class="list-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="list-content">
+                    <div class="list-title">项目整体进度</div>
+                    <div class="list-desc"><span class="tag">7.33%</span></div>
+                </div>
+            </div>
+            <div class="progress-item"><div class="progress-header"><span>安装部署完成率</span><span>0%</span></div><div class="progress-bar-bg"><div class="progress-fill" style="width: 0%;"></div></div></div>
+            <div class="progress-item"><div class="progress-header"><span>需求调研完成率</span><span>83%</span></div><div class="progress-bar-bg"><div class="progress-fill" style="width: 83%;"></div></div></div>
+            <div class="list-item">
+                <div class="list-icon"><i class="fas fa-table"></i></div>
+                <div class="list-content">
+                    <div class="list-title">数据表状态</div>
+                    <div class="list-desc">共39张表，19张需等待校方给数据</div>
+                </div>
+            </div>
+            <div class="progress-item"><div class="progress-header"><span>数据表就绪进度</span><span>51.3%</span></div><div class="progress-bar-bg"><div class="progress-fill" style="width: 51.3%;"></div></div></div>
+            <div class="list-item">
+                <div class="list-icon"><i class="fas fa-spinner fa-pulse"></i></div>
+                <div class="list-content">
+                    <div class="list-title">需求开发与测试</div>
+                    <div class="list-desc">开发中 0 · 验证中 3</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 西安文理学院 -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-university"></i> 西安文理学院</div>
+            <div class="list-item">
+                <div class="list-icon"><i class="fas fa-user"></i></div>
+                <div class="list-content">
+                    <div class="list-title">甲方负责人 / 项目经理</div>
+                    <div class="list-desc">李立 / 朱宏伟</div>
+                </div>
+            </div>
+            <div class="list-item">
+                <div class="list-icon"><i class="fas fa-calendar"></i></div>
+                <div class="list-content">
+                    <div class="list-title">建设周期</div>
+                    <div class="list-desc">2026-01-27 至 2029-01-05 · 服务期36个月</div>
+                </div>
+            </div>
+            <div class="list-item">
+                <div class="list-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="list-content">
+                    <div class="list-title">项目整体进度</div>
+                    <div class="list-desc"><span class="tag">2.39%</span></div>
+                </div>
+            </div>
+            <div class="progress-item"><div class="progress-header"><span>需求调研完成率</span><span>92%</span></div><div class="progress-bar-bg"><div class="progress-fill" style="width: 92%;"></div></div></div>
+            <div class="list-item">
+                <div class="list-icon"><i class="fas fa-spinner fa-pulse"></i></div>
+                <div class="list-content">
+                    <div class="list-title">需求开发与测试</div>
+                    <div class="list-desc">开发中 1 · 验证中 0</div>
+                </div>
+            </div>
+            <hr>
+            <div class="stat-grid">
+                <div class="stat-item"><div class="stat-number">38.5</div><div class="stat-label">实施预算人月</div></div>
+                <div class="stat-item"><div class="stat-number">4.88</div><div class="stat-label">工时人月</div></div>
+                <div class="stat-item"><div class="stat-number">12.67%</div><div class="stat-label">实施投入比例</div></div>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-item"><div class="stat-number">5.65</div><div class="stat-label">二开预算人月</div></div>
+                <div class="stat-item"><div class="stat-number">0.82</div><div class="stat-label">二开提报人月</div></div>
+                <div class="stat-item"><div class="stat-number">14.51%</div><div class="stat-label">二开投入比例</div></div>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-item"><div class="stat-number">35,000</div><div class="stat-label">可变预算金额(元)</div></div>
+                <div class="stat-item"><div class="stat-number">736</div><div class="stat-label">可变提报金额(元)</div></div>
+                <div class="stat-item"><div class="stat-number">2.10%</div><div class="stat-label">可变投入比例</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 六、西安文理学院 - 项目整体目标与阶段目标 ==================== -->
+    <div class="card">
+        <div class="card-title"><i class="fas fa-bullseye"></i> 西安文理学院 · 项目整体目标</div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-star-of-life"></i></div>
+            <div class="list-content">
+                <div class="list-title">最终目标</div>
+                <div class="list-desc">建设覆盖人事管理、数据治理、数据分析与身份认证的一体化智慧校园平台</div>
+            </div>
+        </div>
+        <div class="stat-grid">
+            <div class="stat-item"><div class="stat-number">✓</div><div class="stat-label">教职工管理全流程数字化</div></div>
+            <div class="stat-item"><div class="stat-number">✓</div><div class="stat-label">数据标准统一/质量可控/共享开放</div></div>
+            <div class="stat-item"><div class="stat-number">✓</div><div class="stat-label">可视化分析与智能问答能力</div></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><i class="fas fa-chart-line"></i> 西安文理学院 · 各阶段过程与目标</div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-play"></i></div>
+            <div class="list-content">
+                <div class="list-title">1. 启动阶段</div>
+                <div class="list-desc">组建团队、召开启动会、输出《项目启动报告》与《项目实施计划》</div>
+            </div>
+        </div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-server"></i></div>
+            <div class="list-content">
+                <div class="list-title">2. 安装部署阶段</div>
+                <div class="list-desc">部署人事管理系统、数据基座、治理平台、认证平台、决策分析平台</div>
+            </div>
+        </div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-database"></i></div>
+            <div class="list-content">
+                <div class="list-title">3. 项目实施阶段（核心）</div>
+                <div class="list-desc">数据治理与标准建设 · 数据采集与清洗 · 系统功能落地 · 集成与认证</div>
+            </div>
+        </div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-vial"></i></div>
+            <div class="list-content">
+                <div class="list-title">4. 试运行阶段</div>
+                <div class="list-desc">3个月试运行期，持续监控、修复故障、优化性能</div>
+            </div>
+        </div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-check-double"></i></div>
+            <div class="list-content">
+                <div class="list-title">5. 验收阶段</div>
+                <div class="list-desc">初验 → 试运行 → 终验，签署《终验合格证明》</div>
+            </div>
+        </div>
+        <div class="list-item">
+            <div class="list-icon"><i class="fas fa-headset"></i></div>
+            <div class="list-content">
+                <div class="list-title">6. 售后（质保期）阶段</div>
+                <div class="list-desc">3年质保 · 7×24小时支持 · 30分钟响应 · 每季度巡检</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 七、学习进度 + e2考核内容（弹窗） ==================== -->
+    <div class="two-col">
+        <div class="card" id="e2ProgressCard" style="cursor: pointer;">
+            <div class="card-title"><i class="fas fa-graduation-cap"></i> 学习进度 · e1 / e2</div>
+            <div class="progress-item"><div class="progress-header"><span>e1 考核</span><span>✅ 已通过</span></div><div class="progress-bar-bg"><div class="progress-fill" style="width: 100%;"></div></div></div>
+            <div class="progress-item"><div class="progress-header"><span>e2 考核进度</span><span>60%</span></div><div class="progress-bar-bg"><div class="progress-fill" style="width: 60%;"></div></div></div>
+            <div class="list-item">
+                <div class="list-icon"><i class="fas fa-flag-checkered"></i></div>
+                <div class="list-content">
+                    <div class="list-title">预计完成</div>
+                    <div class="list-desc">六月底前通过 e2</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 0.5rem;">
+                <span class="tag">👆 点击此处查看 e2 考核详细要点</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-calendar-week"></i> 下个月安排（6月）</div>
+            <div class="list-item">
+                <div class="list-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="list-content"><div class="list-title">学习考核</div><div class="list-desc">继续学习 e2 考核内容，确保六月底前通过</div></div>
+            </div>
+            <div class="list-item">
+                <div class="list-icon"><i class="fas fa-exchange-alt"></i></div>
+                <div class="list-content"><div class="list-title">数据沟通</div><div class="list-desc">沟通西安石油大学推送数据，处理数据问题</div></div>
+            </div>
+            <div class="list-item">
+                <div class="list-icon"><i class="fas fa-tasks"></i></div>
+                <div class="list-content"><div class="list-title">西安文理任务</div><div class="list-desc">完成西安文理学院部分任务</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        汇报人：许仕浩 · 2026年5月
+    </div>
+</div>
+
+<!-- e2考核内容弹窗 -->
+<div id="e2Modal" class="modal-overlay">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3><i class="fas fa-list-check"></i> e2 考核要点（13项）</h3>
+            <button class="modal-close" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="list-item"><div class="list-icon"><i class="fas fa-book"></i></div><div class="list-content"><div class="list-title">笔试概念</div><div class="list-desc">数据仓库/元数据/数据标准/数据资源目录业务概念</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-sliders-h"></i></div><div class="list-content"><div class="list-title">数据基座初始化</div><div class="list-desc">组织同步、用户同步、权限、认证、LOGO、文件/公告发布等</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-link"></i></div><div class="list-content"><div class="list-title">CASP集成</div><div class="list-desc">消息中心与代办中心集成方法</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-database"></i></div><div class="list-content"><div class="list-title">元数据配置</div><div class="list-desc">数据仓库、来源库、任务、仪表板元数据</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-tools"></i></div><div class="list-content"><div class="list-title">补采工具</div><div class="list-desc">补采工具使用</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-chart-pie"></i></div><div class="list-content"><div class="list-title">数据门户</div><div class="list-desc">资源申请/API调用、帆软报表集成、顶部导航栏配置</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-chart-line"></i></div><div class="list-content"><div class="list-title">数据运维</div><div class="list-desc">运维监控、重点任务、任务调度记录</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-migration"></i></div><div class="list-content"><div class="list-title">老平台迁移</div><div class="list-desc">希嘉API迁移、V5平台迁移、ODI-ETL迁移</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-chart-simple"></i></div><div class="list-content"><div class="list-title">可视化大屏</div><div class="list-desc">主题分析实施能力（含调研）</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-upload"></i></div><div class="list-content"><div class="list-title">高职上报工具</div><div class="list-desc">新版与老版实施能力</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-chalkboard-user"></i></div><div class="list-content"><div class="list-title">数据中心实施</div><div class="list-desc">学生、教师数据中心实施能力</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-id-card"></i></div><div class="list-content"><div class="list-title">画像实施</div><div class="list-desc">学生、教师画像实施能力</div></div></div>
+            <div class="list-item"><div class="list-icon"><i class="fas fa-robot"></i></div><div class="list-content"><div class="list-title">AI问数</div><div class="list-desc">AI问数实施能力</div></div></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // e2 进度卡片点击弹窗 (无动画效果)
+    const e2Card = document.getElementById('e2ProgressCard');
+    const modal = document.getElementById('e2Modal');
+    const closeBtn = document.getElementById('closeModalBtn');
+
+    if (e2Card && modal && closeBtn) {
+        e2Card.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+    }
+</script>
+</body>
+</html>
